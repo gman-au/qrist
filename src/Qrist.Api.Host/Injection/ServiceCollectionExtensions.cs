@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Qrist.Adapters.Todoist;
-using Qrist.Api.Host.Health;
+using Qrist.Api.Host.Infrastructure;
 using Qrist.Interfaces;
 
 namespace Qrist.Api.Host.Injection
@@ -11,6 +11,8 @@ namespace Qrist.Api.Host.Injection
         {
             services
                 .AddTransient<ITodoistAdapter, TodoistAdapter>()
+                .AddTransient<IQristCodeBuilder, TodoistQristCodeBuilder>()
+                .AddTransient<IQrCodeBuilderRequestHandler, QrCodeBuilderRequestHandler>()
                 .AddTransient<IHealthChecker, HealthChecker>();
 
             return services;

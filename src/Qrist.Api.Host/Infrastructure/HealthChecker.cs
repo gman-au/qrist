@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Qrist.Interfaces;
 
-namespace Qrist.Api.Host.Health
+namespace Qrist.Api.Host.Infrastructure
 {
     public class HealthChecker : IHealthChecker
     {
