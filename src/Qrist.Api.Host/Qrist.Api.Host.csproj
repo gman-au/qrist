@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Qrist.Adapters.Todoist\Qrist.Adapters.Todoist.csproj" />
+      <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj" />
+    </ItemGroup>
+
+</Project>
