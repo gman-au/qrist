@@ -44,18 +44,23 @@ namespace Qrist.Tests.Unit
 
                 var qrCodeBuilderRequestHandler =
                     _provider
-                        .GetService<IQrCodeBuilderRequestHandler>();
+                        .GetService<IQrCodeEncoder>();
 
-                var adapters =
+                var qrCodeProcessor =
                     _provider
-                        .GetServices<IQristCodeBuilder>();
+                        .GetService<IQrCodeProcessor>();
+
+                var requestActioners =
+                    _provider
+                        .GetServices<IRequestActioner>();
 
                 Assert
                     .Multiple(() =>
                     {
                         Assert.That(healthChecker, Is.Not.Null);
                         Assert.That(qrCodeBuilderRequestHandler, Is.Not.Null);
-                        Assert.That(adapters, Is.Not.Empty);
+                        Assert.That(qrCodeProcessor, Is.Not.Null);
+                        Assert.That(requestActioners, Is.Not.Empty);
                     });
             }
         }

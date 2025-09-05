@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="QRCoder" Version="1.6.0" />
+    </ItemGroup>
+
+</Project>

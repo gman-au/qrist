@@ -4,25 +4,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Qrist.Interfaces;
 
-namespace Qrist.Infrastructure.Gzip
+namespace Qrist.Infrastructure.Compression.Brotli
 {
-    public class GzipCompressor : ICompressor
+    public class BrotliCompressor : ICompressor
     {
-        public async Task<byte[]> CompressAsync(
-            byte[] data,
-            CancellationToken cancellationToken = default
-        )
+        public async Task<byte[]> CompressAsync(byte[] data, CancellationToken cancellationToken = default)
         {
             using var memoryStream = new MemoryStream();
 
-            await using (var gzipStream = new GZipStream(memoryStream, CompressionMode.Compress))
+            await using (var brotliStream = new BrotliStream(memoryStream, CompressionLevel.Optimal))
             {
                 await
-                    gzipStream
-                        .WriteAsync(
-                            data,
-                            cancellationToken
-                        );
+                    brotliStream
+                        .WriteAsync(data, cancellationToken);
             }
 
             return
@@ -34,12 +28,12 @@ namespace Qrist.Infrastructure.Gzip
         {
             using var memoryStream = new MemoryStream(data);
 
-            await using var gzipStream = new GZipStream(memoryStream, CompressionMode.Decompress);
+            await using var brotliStream = new BrotliStream(memoryStream, CompressionMode.Decompress);
 
             using var decompressedStream = new MemoryStream();
 
             await
-                gzipStream
+                brotliStream
                     .CopyToAsync(decompressedStream, cancellationToken);
 
             return

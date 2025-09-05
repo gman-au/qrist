@@ -10,8 +10,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Qrist.Adapters.Todoist\Qrist.Adapters.Todoist.csproj" />
-      <ProjectReference Include="..\Qrist.Infrastructure.Brotli\Qrist.Infrastructure.Brotli.csproj" />
-      <ProjectReference Include="..\Qrist.Infrastructure.Gzip\Qrist.Infrastructure.Gzip.csproj" />
+      <ProjectReference Include="..\Qrist.Infrastructure.Compression.Brotli\Qrist.Infrastructure.Compression.Brotli.csproj" />
+      <ProjectReference Include="..\Qrist.Infrastructure.Compression.Gzip\Qrist.Infrastructure.Compression.Gzip.csproj" />
+      <ProjectReference Include="..\Qrist.Infrastructure.QrCode.Encoding\Qrist.Infrastructure.QrCode.Encoding.csproj" />
+      <ProjectReference Include="..\Qrist.Infrastructure.QrCode.Production\Qrist.Infrastructure.QrCode.Production.csproj" />
       <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj" />
     </ItemGroup>
 

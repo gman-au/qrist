@@ -4,12 +4,10 @@ using Qrist.Domain;
 
 namespace Qrist.Interfaces
 {
-    public interface IQristCodeBuilder
+    public interface IQrCodeEncoder
     {
-        public bool IsApplicable(string provider);
-
-        Task<byte[]> GenerateQrCodeAsync(
-            BuildQrCodeRequest request,
+        Task<byte[]> ProcessAsync(
+            QrCodeRequest request,
             CancellationToken cancellationToken = default
         );
     }

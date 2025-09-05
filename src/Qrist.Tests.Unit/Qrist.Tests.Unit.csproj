@@ -18,7 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Qrist.Api.Host\Qrist.Api.Host.csproj" />
-      <ProjectReference Include="..\Qrist.Infrastructure.Brotli\Qrist.Infrastructure.Brotli.csproj" />
+      <ProjectReference Include="..\Qrist.Infrastructure.Compression.Brotli\Qrist.Infrastructure.Compression.Brotli.csproj" />
       <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj" />
     </ItemGroup>
 

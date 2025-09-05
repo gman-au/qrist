@@ -2,7 +2,7 @@
 
 namespace Qrist.Domain
 {
-    public class BuildQrCodeRequest
+    public class QrCodeRequest
     {
         [JsonPropertyName("provider")] public string Provider { get; set; }
 

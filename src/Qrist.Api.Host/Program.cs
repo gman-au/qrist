@@ -34,7 +34,8 @@ app
 
 app
     .MapHealthCheck()
-    .MapQrCodeBuilderRequest();
+    .MapQrCodeBuilderRequests()
+    .MapQrCodeProcessorRequests();
 
 app
     .Run();

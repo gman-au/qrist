@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
-using Qrist.Infrastructure.Gzip;
+using Qrist.Infrastructure.Compression.Gzip;
 
 namespace Qrist.Tests.Unit
 {

@@ -10,9 +10,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Domain", "Qrist.Domai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Tests.Unit", "Qrist.Tests.Unit\Qrist.Tests.Unit.csproj", "{5B907B59-06F3-422C-A745-9E85DFEE65BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure.Gzip", "Qrist.Infrastructure.Gzip\Qrist.Infrastructure.Gzip.csproj", "{79A6AE4F-918C-4B48-8C6F-D728D242F40E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure.Compression.Gzip", "Qrist.Infrastructure.Compression.Gzip\Qrist.Infrastructure.Compression.Gzip.csproj", "{79A6AE4F-918C-4B48-8C6F-D728D242F40E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure.Brotli", "Qrist.Infrastructure.Brotli\Qrist.Infrastructure.Brotli.csproj", "{169267ED-EB5E-4750-9282-A002F9E4536E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure.Compression.Brotli", "Qrist.Infrastructure.Compression.Brotli\Qrist.Infrastructure.Compression.Brotli.csproj", "{169267ED-EB5E-4750-9282-A002F9E4536E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure.QrCode.Production", "Qrist.Infrastructure.QrCode.Production\Qrist.Infrastructure.QrCode.Production.csproj", "{79213AA2-6577-4068-9C3A-9ED829D99BD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure.QrCode.Encoding", "Qrist.Infrastructure.QrCode.Encoding\Qrist.Infrastructure.QrCode.Encoding.csproj", "{1E2D00BD-B1ED-493F-8CCC-4D2222705D24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,5 +52,13 @@ Global
 		{169267ED-EB5E-4750-9282-A002F9E4536E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{169267ED-EB5E-4750-9282-A002F9E4536E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{169267ED-EB5E-4750-9282-A002F9E4536E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79213AA2-6577-4068-9C3A-9ED829D99BD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79213AA2-6577-4068-9C3A-9ED829D99BD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79213AA2-6577-4068-9C3A-9ED829D99BD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79213AA2-6577-4068-9C3A-9ED829D99BD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E2D00BD-B1ED-493F-8CCC-4D2222705D24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E2D00BD-B1ED-493F-8CCC-4D2222705D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E2D00BD-B1ED-493F-8CCC-4D2222705D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E2D00BD-B1ED-493F-8CCC-4D2222705D24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
