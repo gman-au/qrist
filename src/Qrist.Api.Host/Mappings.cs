@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Text;
+using System.Threading;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Qrist.Domain;
 using Qrist.Interfaces;
@@ -26,22 +29,29 @@ namespace Qrist.Api.Host
             app
                 .MapPost("/BuildCode", async (
                         [FromBody] QrCodeRequest request,
+                        [FromServices] IQrCodeGenerator qrCodeGenerator,
                         [FromServices] IQrCodeEncoder qrCodeEncoder) =>
                     {
-                        var qrCode =
+                        var cancellationToken = CancellationToken.None;
+
+                        var qrCodeData =
                             await
                                 qrCodeEncoder
-                                    .ProcessAsync(request);
+                                    .ProcessAsync(request, cancellationToken);
 
                         var qrCodeString =
                             Convert
-                                .ToBase64String(qrCode);
+                                .ToBase64String(qrCodeData);
 
-                        return qrCodeString;
+                        var qrCodeImage =
+                            await
+                                qrCodeGenerator
+                                    .GenerateAsync(
+                                        qrCodeString,
+                                        cancellationToken
+                                    );
 
-                        return
-                            Uri
-                                .EscapeDataString(qrCodeString);
+                        return qrCodeImage;
                     }
                 )
                 .WithName("BuildCode");

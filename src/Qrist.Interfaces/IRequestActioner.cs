@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Qrist.Domain;
 
 namespace Qrist.Interfaces
 {
@@ -8,7 +9,7 @@ namespace Qrist.Interfaces
         bool IsApplicable(string provider);
 
         Task ProcessAsync(
-            dynamic requestData,
+            QrCodeRequest requestData,
             CancellationToken cancellationToken = default
         );
     }

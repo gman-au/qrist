@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Qrist.Adapters.Todoist.Definition;
+using Qrist.Domain;
 using Qrist.Interfaces;
 
 namespace Qrist.Adapters.Todoist
@@ -20,13 +21,14 @@ namespace Qrist.Adapters.Todoist
                 );
 
         public async Task ProcessAsync(
-            dynamic requestData,
+            QrCodeRequest qrCodeRequest,
             CancellationToken cancellationToken = default
         )
         {
-            var request =
+            var data =
                 JsonSerializer
-                    .Deserialize<CreateTodoistTaskRequest>(requestData);
+                    .Deserialize<CreateTodoistTaskRequest>(qrCodeRequest?.Data);
+
         }
     }
 }

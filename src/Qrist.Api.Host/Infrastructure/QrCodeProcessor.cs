@@ -39,6 +39,10 @@ namespace Qrist.Api.Host.Infrastructure
 
             if (processor == null)
                 throw new Exception($"Could not identify processor for QR code of provider type {request.Provider}.");
+
+            await
+                processor
+                    .ProcessAsync(request, cancellationToken);
         }
     }
 }
