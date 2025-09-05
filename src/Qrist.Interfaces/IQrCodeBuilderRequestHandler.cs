@@ -6,6 +6,9 @@ namespace Qrist.Interfaces
 {
     public interface IQrCodeBuilderRequestHandler
     {
-        Task HandleAsync(BuildQrCodeRequest request, CancellationToken cancellationToken = default);
+        Task<byte[]> HandleAsync(
+            BuildQrCodeRequest request,
+            CancellationToken cancellationToken = default
+        );
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Qrist.Domain;
@@ -10,12 +12,31 @@ namespace Qrist.Api.Host.Infrastructure
         IEnumerable<IQristCodeBuilder> codeBuilders)
         : IQrCodeBuilderRequestHandler
     {
-        public async Task HandleAsync(
+        private const int MaxQrCodeLengthBytes = 2953;
+
+        public async Task<byte[]> HandleAsync(
             BuildQrCodeRequest request,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(request.Provider))
-                throw new System.ArgumentException("Provider is required");
+                throw new ArgumentException("Provider is required");
+
+            var builderToUse =
+                (codeBuilders ?? [])
+                .FirstOrDefault(o => o.IsApplicable(request.Provider));
+
+            if (builderToUse == null)
+                throw new Exception($"No provider found for type \"{request.Provider}\".");
+
+            var qrCode =
+                await
+                    builderToUse
+                        .GenerateQrCodeAsync(request, cancellationToken);
+
+            if (qrCode.Length > MaxQrCodeLengthBytes)
+                throw new Exception("QR code data is too large - cannot create QR code.");
+
+            return qrCode;
         }
     }
 }
