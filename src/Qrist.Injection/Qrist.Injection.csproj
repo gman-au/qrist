@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Qrist.Adapters.Todoist\Qrist.Adapters.Todoist.csproj"/>
+        <ProjectReference Include="..\Qrist.Application\Qrist.Application.csproj"/>
+        <ProjectReference Include="..\Qrist.Infrastructure.Compression.Brotli\Qrist.Infrastructure.Compression.Brotli.csproj"/>
+        <ProjectReference Include="..\Qrist.Infrastructure.QrCode.Encoding\Qrist.Infrastructure.QrCode.Encoding.csproj"/>
+        <ProjectReference Include="..\Qrist.Infrastructure.QrCode.Production\Qrist.Infrastructure.QrCode.Production.csproj"/>
+        <ProjectReference Include="..\Qrist.Infrastructure\Qrist.Infrastructure.csproj" />
+        <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.8"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.8" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.8"/>
+    </ItemGroup>
+
+</Project>

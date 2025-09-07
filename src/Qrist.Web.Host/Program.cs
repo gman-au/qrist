@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Qrist.Injection;
 using Qrist.Web.Host.Components;
 
 var builder =
@@ -8,9 +12,16 @@ var services =
     builder
         .Services;
 
+var configuration =
+    builder
+        .Configuration;
+
 services
     .AddRazorComponents()
     .AddInteractiveServerComponents();
+
+services
+    .AddQristServices(configuration);
 
 var app =
     builder

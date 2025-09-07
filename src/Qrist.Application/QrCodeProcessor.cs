@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Qrist.Domain;
 using Qrist.Interfaces;
 
-namespace Qrist.Api.Host.Infrastructure
+namespace Qrist.Application
 {
     public class QrCodeProcessor(
         IQrCodeDecoder qrCodeDecoder,

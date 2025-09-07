@@ -14,6 +14,7 @@
       <ProjectReference Include="..\Qrist.Infrastructure.Compression.Gzip\Qrist.Infrastructure.Compression.Gzip.csproj" />
       <ProjectReference Include="..\Qrist.Infrastructure.QrCode.Encoding\Qrist.Infrastructure.QrCode.Encoding.csproj" />
       <ProjectReference Include="..\Qrist.Infrastructure.QrCode.Production\Qrist.Infrastructure.QrCode.Production.csproj" />
+      <ProjectReference Include="..\Qrist.Injection\Qrist.Injection.csproj" />
       <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj" />
     </ItemGroup>
 

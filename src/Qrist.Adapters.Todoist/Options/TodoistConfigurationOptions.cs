@@ -2,7 +2,9 @@ namespace Qrist.Adapters.Todoist.Options
 {
     public class TodoistConfigurationOptions
     {
-        public string AuthEndpoint { get; set; }
+        public string AuthRequestEndpoint { get; set; }
+
+        public string TokenRequestEndpoint { get; set; }
 
         public string ClientId { get; set; }
 

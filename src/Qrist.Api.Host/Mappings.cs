@@ -1,8 +1,5 @@
-﻿using System;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Qrist.Domain;
 using Qrist.Interfaces;
@@ -29,29 +26,14 @@ namespace Qrist.Api.Host
             app
                 .MapPost("/BuildCode", async (
                         [FromBody] QrCodeRequest request,
-                        [FromServices] IQrCodeGenerator qrCodeGenerator,
-                        [FromServices] IQrCodeEncoder qrCodeEncoder) =>
+                        [FromServices] IQristApplication qristApplication) =>
                     {
                         var cancellationToken = CancellationToken.None;
 
-                        var qrCodeData =
+                        return
                             await
-                                qrCodeEncoder
-                                    .ProcessAsync(request, cancellationToken);
-
-                        var qrCodeString =
-                            Convert
-                                .ToBase64String(qrCodeData);
-
-                        var qrCodeImage =
-                            await
-                                qrCodeGenerator
-                                    .GenerateAsync(
-                                        qrCodeString,
-                                        cancellationToken
-                                    );
-
-                        return qrCodeImage;
+                                qristApplication
+                                    .ProduceQrCodeAsync(request, cancellationToken);
                     }
                 )
                 .WithName("BuildCode");
@@ -64,11 +46,11 @@ namespace Qrist.Api.Host
             app
                 .MapPost("/ProcessCode", async (
                         [FromQuery] string code,
-                        [FromServices] IQrCodeProcessor qrCodeProcessor) =>
+                        [FromServices] IQristApplication qrApplication) =>
                     {
                         await
-                            qrCodeProcessor
-                                .ProcessAsync(code);
+                            qrApplication
+                                .ProcessQrCodeAsync(code);
                     }
                 )
                 .WithName("ProcessCode");

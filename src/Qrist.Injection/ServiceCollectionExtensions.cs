@@ -3,13 +3,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Qrist.Adapters.Todoist;
 using Qrist.Adapters.Todoist.Options;
-using Qrist.Api.Host.Infrastructure;
+using Qrist.Application;
+using Qrist.Infrastructure;
 using Qrist.Infrastructure.Compression.Brotli;
 using Qrist.Infrastructure.QrCode.Encoding;
 using Qrist.Infrastructure.QrCode.Production;
 using Qrist.Interfaces;
 
-namespace Qrist.Api.Host.Injection
+namespace Qrist.Injection
 {
     public static class ServiceCollectionExtensions
     {
@@ -18,17 +19,20 @@ namespace Qrist.Api.Host.Injection
             IConfigurationRoot configuration)
         {
             services
+                .AddTransient<IQristApplication, QristApplication>()
                 .AddTransient<IQrCodeEncoder, QrCodeEncoder>()
                 .AddTransient<IQrCodeDecoder, QrCodeDecoder>()
                 .AddTransient<IQrCodeProcessor, QrCodeProcessor>()
-                .AddTransient<IHealthChecker, HealthChecker>();
+                .AddTransient<IHealthChecker, HealthChecker>()
+                .AddTransient<ICodeGenerator, CodeGenerator>();
 
             services
                 .AddTransient<ICompressor, BrotliCompressor>()
                 .AddTransient<IQrCodeGenerator, QrCodeGenerator>();
 
             services
-                .AddTransient<IRequestActioner, TodoistQrCodeActioner>();
+                .AddTransient<IRequestActioner, TodoistQrCodeActioner>()
+                .AddTransient<ITodoistAuthoriser, TodoistAuthoriser>();
 
             services
                 .Configure<TodoistConfigurationOptions>(

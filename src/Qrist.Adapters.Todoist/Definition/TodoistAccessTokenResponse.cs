@@ -1,0 +1,11 @@
+using System.Text.Json.Serialization;
+
+namespace Qrist.Adapters.Todoist.Definition
+{
+    public class TodoistAccessTokenResponse
+    {
+        [JsonPropertyName("access_token")] public string AccessToken { get; set; }
+
+        [JsonPropertyName("token_type")] public string TokenType { get; set; }
+    }
+}

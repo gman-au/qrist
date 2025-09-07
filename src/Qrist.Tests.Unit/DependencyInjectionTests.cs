@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Qrist.Api.Host.Injection;
+using Qrist.Injection;
 using Qrist.Interfaces;
 
 namespace Qrist.Tests.Unit

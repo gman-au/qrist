@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Qrist.Api.Host;
-using Qrist.Api.Host.Injection;
+using Qrist.Injection;
 
 var builder =
     WebApplication

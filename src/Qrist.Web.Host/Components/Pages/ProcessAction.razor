@@ -1,0 +1,30 @@
+@page "/Todoist/ProcessAction/{QrCodeData}"
+@using System.Threading
+@using Qrist.Interfaces
+@inject IQristApplication QristApplication
+@inject NavigationManager NavigationManager
+
+<h3>ProcessAction</h3>
+
+@code {
+
+    [Parameter] public string QrCodeData { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(QrCodeData))
+        {
+            try
+            {
+                await
+                    QristApplication
+                        .ProcessQrCodeAsync(QrCodeData, CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                // TODO: redirect to error page
+            }
+        }
+    }
+
+}

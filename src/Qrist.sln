@@ -20,6 +20,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure.QrCode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Web.Host", "Qrist.Web.Host\Qrist.Web.Host.csproj", "{4DE66021-0A7B-4199-80F6-C210DC5D35AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Injection", "Qrist.Injection\Qrist.Injection.csproj", "{ED27557E-7CAA-4203-BD50-1DBA2334B51D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Application", "Qrist.Application\Qrist.Application.csproj", "{D962073B-29D7-4DB8-8BFD-3735C08DA8EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure", "Qrist.Infrastructure\Qrist.Infrastructure.csproj", "{5D0BDFD9-9F07-4AD6-B932-DFFEDF9723DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,5 +72,17 @@ Global
 		{4DE66021-0A7B-4199-80F6-C210DC5D35AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DE66021-0A7B-4199-80F6-C210DC5D35AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DE66021-0A7B-4199-80F6-C210DC5D35AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED27557E-7CAA-4203-BD50-1DBA2334B51D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED27557E-7CAA-4203-BD50-1DBA2334B51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED27557E-7CAA-4203-BD50-1DBA2334B51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED27557E-7CAA-4203-BD50-1DBA2334B51D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D962073B-29D7-4DB8-8BFD-3735C08DA8EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D962073B-29D7-4DB8-8BFD-3735C08DA8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D962073B-29D7-4DB8-8BFD-3735C08DA8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D962073B-29D7-4DB8-8BFD-3735C08DA8EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D0BDFD9-9F07-4AD6-B932-DFFEDF9723DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D0BDFD9-9F07-4AD6-B932-DFFEDF9723DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D0BDFD9-9F07-4AD6-B932-DFFEDF9723DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D0BDFD9-9F07-4AD6-B932-DFFEDF9723DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

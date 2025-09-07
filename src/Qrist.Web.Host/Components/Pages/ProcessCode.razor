@@ -1,0 +1,27 @@
+@page "/Todoist/ProcessCode/{QrCodeData}"
+@using System.Threading
+@using Qrist.Adapters.Todoist
+@inject ITodoistAuthoriser TodoistAuthoriser
+@inject NavigationManager NavigationManager
+
+<h3>ProcessCode</h3>
+
+@code {
+
+    [Parameter]
+    public string QrCodeData { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var url =
+            await
+                TodoistAuthoriser
+                    .GetRedirectUrlAsync(CancellationToken.None);
+
+        if (string.IsNullOrEmpty(url))
+            throw new Exception("URL not available. Please try again later.");
+
+        NavigationManager
+            .NavigateTo(url);
+    }
+}

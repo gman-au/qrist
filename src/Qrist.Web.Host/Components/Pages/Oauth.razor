@@ -1,0 +1,40 @@
+@page "/Todoist/Oauth"
+@using System.Text.Encodings.Web
+@using System.Threading
+@using System.Web
+@using QRCoder
+@using Qrist.Adapters.Todoist
+@inject ITodoistAuthoriser TodoistAuthoriser
+@inject NavigationManager NavigationManager
+
+<h3>ProcessCode</h3>
+
+@code {
+
+    [SupplyParameterFromQuery(Name = "code")]
+    private string Code { get; set; }
+
+    [SupplyParameterFromQuery(Name = "state")]
+    private string State { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var accessToken =
+            await
+                TodoistAuthoriser
+                    .GetAccessTokenAsync(Code, CancellationToken.None);
+
+        if (string.IsNullOrEmpty(accessToken))
+            throw new Exception("There was an error.");
+
+        // TODO: delete this
+        var qrCodeData = "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";
+
+        qrCodeData = HttpUtility.UrlEncode(qrCodeData);
+        // TODO: delete this. QR code, state, and session identifier should go in scoped / singleton resolver
+
+        NavigationManager
+            .NavigateTo($"/Todoist/ProcessAction/{qrCodeData}");
+    }
+
+}
