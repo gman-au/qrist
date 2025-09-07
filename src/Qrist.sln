@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure.QrCode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure.QrCode.Encoding", "Qrist.Infrastructure.QrCode.Encoding\Qrist.Infrastructure.QrCode.Encoding.csproj", "{1E2D00BD-B1ED-493F-8CCC-4D2222705D24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Web.Host", "Qrist.Web.Host\Qrist.Web.Host.csproj", "{4DE66021-0A7B-4199-80F6-C210DC5D35AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +62,9 @@ Global
 		{1E2D00BD-B1ED-493F-8CCC-4D2222705D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E2D00BD-B1ED-493F-8CCC-4D2222705D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E2D00BD-B1ED-493F-8CCC-4D2222705D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DE66021-0A7B-4199-80F6-C210DC5D35AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DE66021-0A7B-4199-80F6-C210DC5D35AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DE66021-0A7B-4199-80F6-C210DC5D35AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DE66021-0A7B-4199-80F6-C210DC5D35AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

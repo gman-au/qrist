@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,11 +12,15 @@ var services =
     builder
         .Services;
 
+var configuration =
+    builder
+        .Configuration;
+
 services
     .AddOpenApi();
 
 services
-    .AddQristServices();
+    .AddQristServices(configuration);
 
 var app =
     builder

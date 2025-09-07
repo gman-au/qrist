@@ -21,6 +21,9 @@ namespace Qrist.Api.Host.Infrastructure
             CancellationToken cancellationToken = default
         )
         {
+            logger
+                .LogInformation("Received QR code to process");
+
             var byteData =
                 await
                     qrCodeDecoder
@@ -43,6 +46,9 @@ namespace Qrist.Api.Host.Infrastructure
             await
                 processor
                     .ProcessAsync(request, cancellationToken);
+
+            logger
+                .LogInformation("Processed QR code successfully");
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Qrist.Adapters.Todoist;
+using Qrist.Adapters.Todoist.Options;
 using Qrist.Api.Host.Infrastructure;
 using Qrist.Infrastructure.Compression.Brotli;
 using Qrist.Infrastructure.QrCode.Encoding;
@@ -11,7 +13,9 @@ namespace Qrist.Api.Host.Injection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddQristServices(this IServiceCollection services)
+        public static IServiceCollection AddQristServices(
+            this IServiceCollection services,
+            IConfigurationRoot configuration)
         {
             services
                 .AddTransient<IQrCodeEncoder, QrCodeEncoder>()
@@ -25,6 +29,12 @@ namespace Qrist.Api.Host.Injection
 
             services
                 .AddTransient<IRequestActioner, TodoistQrCodeActioner>();
+
+            services
+                .Configure<TodoistConfigurationOptions>(
+                    configuration
+                        .GetSection(nameof(TodoistConfigurationOptions))
+                );
 
             services
                 .AddLogging(o => o.AddConsole());

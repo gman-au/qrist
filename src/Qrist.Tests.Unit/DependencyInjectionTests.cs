@@ -1,11 +1,12 @@
 using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Qrist.Api.Host.Injection;
 using Qrist.Interfaces;
 
 namespace Qrist.Tests.Unit
 {
-    internal class Tests
+    internal class DependencyInjectionTests
     {
         private readonly TestContext _context = new();
 
@@ -27,8 +28,12 @@ namespace Qrist.Tests.Unit
                 _services =
                     new ServiceCollection();
 
+                var configuration =
+                    new ConfigurationBuilder()
+                        .Build();
+
                 _services
-                    .AddQristServices();
+                    .AddQristServices(configuration);
             }
 
             public void ActBuildServices() =>
