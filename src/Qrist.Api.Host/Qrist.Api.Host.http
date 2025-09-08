@@ -1,6 +1,0 @@
-@Qrist.Api.Host_HostAddress = http://localhost:5085
-
-GET {{Qrist.Api.Host_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

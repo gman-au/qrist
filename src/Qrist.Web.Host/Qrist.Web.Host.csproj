@@ -5,11 +5,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Qrist.Api.Host\Qrist.Api.Host.csproj" />
+      <PackageReference Include="Markdig" Version="0.41.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Markdig" Version="0.41.3" />
+      <ProjectReference Include="..\Qrist.Adapters.Todoist\Qrist.Adapters.Todoist.csproj" />
+      <ProjectReference Include="..\Qrist.Injection\Qrist.Injection.csproj" />
+      <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

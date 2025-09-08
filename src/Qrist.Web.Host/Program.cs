@@ -23,6 +23,9 @@ services
 services
     .AddQristServices(configuration);
 
+services
+    .AddControllers();
+
 var app =
     builder
         .Build();
@@ -43,6 +46,9 @@ app
 
 app
     .UseAntiforgery();
+
+app
+    .MapControllers();
 
 app
     .MapStaticAssets();

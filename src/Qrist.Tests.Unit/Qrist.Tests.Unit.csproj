@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.8" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0"/>
         <PackageReference Include="NUnit" Version="3.13.3"/>
         <PackageReference Include="NUnit3TestAdapter" Version="4.4.2"/>
@@ -17,8 +18,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Qrist.Api.Host\Qrist.Api.Host.csproj" />
       <ProjectReference Include="..\Qrist.Infrastructure.Compression.Brotli\Qrist.Infrastructure.Compression.Brotli.csproj" />
+      <ProjectReference Include="..\Qrist.Infrastructure.Compression.Gzip\Qrist.Infrastructure.Compression.Gzip.csproj" />
+      <ProjectReference Include="..\Qrist.Injection\Qrist.Injection.csproj" />
       <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj" />
     </ItemGroup>
 
