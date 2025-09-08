@@ -41,30 +41,45 @@ namespace Qrist.Application
             CancellationToken cancellationToken = default
         )
         {
-            logger
-                .LogInformation("Received QR code to process {sessionId}", sessionId);
+            try
+            {
+                logger
+                    .LogInformation("Received QR code to process {sessionId}", sessionId);
 
-            var sessionStateItem =
-                sessionCache
-                    .RetrieveById(sessionId);
+                var sessionStateItem =
+                    sessionCache
+                        .RetrieveById(sessionId);
 
-            var (request, actioner) =
+                var (request, actioner) =
+                    await
+                        GetRequestAndActionerAsync(
+                            sessionStateItem.QrCodeData,
+                            cancellationToken
+                        );
+
                 await
-                    GetRequestAndActionerAsync(
-                        sessionStateItem.QrCodeData,
-                        cancellationToken
-                    );
+                    actioner
+                        .ProcessAsync(
+                            request,
+                            sessionStateItem,
+                            cancellationToken
+                        );
 
-            await
-                actioner
-                    .ProcessAsync(
-                        request,
-                        sessionStateItem,
-                        cancellationToken
-                    );
+                logger
+                    .LogInformation("Processed QR code successfully");
 
-            logger
-                .LogInformation("Processed QR code successfully");
+                // clear cache entries when completed
+                sessionCache
+                    .RemoveById(sessionId);
+
+                sessionCache
+                    .RemoveByState(sessionStateItem.State);
+            }
+            catch (Exception ex)
+            {
+                logger
+                    .LogError("Error processing QR code: {message}", ex.Message);
+            }
         }
 
         private async Task<Tuple<QrCodeRequest, IRequestActioner>> GetRequestAndActionerAsync(

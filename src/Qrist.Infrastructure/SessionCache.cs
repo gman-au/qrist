@@ -73,5 +73,17 @@ namespace Qrist.Infrastructure
 
             return sessionStateItem;
         }
+
+        public void RemoveByState(string state)
+        {
+            _memoryCacheStates
+                .Remove(state);
+        }
+
+        public void RemoveById(Guid id)
+        {
+            _memoryCacheStates
+                .Remove(id);
+        }
     }
 }

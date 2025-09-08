@@ -10,5 +10,9 @@ namespace Qrist.Interfaces
         SessionStateItem RetrieveByState(string state);
 
         SessionStateItem RetrieveById(Guid id);
+
+        void RemoveByState(string state);
+
+        void RemoveById(Guid id);
     }
 }

@@ -46,9 +46,6 @@ namespace Qrist.Infrastructure.QrCode.Encoding
             logger
                 .LogDebug("Compressed request size: {size}", encodedRequest.Length);
 
-            if (encodedRequest.Length > MaxQrCodeLengthBytes)
-                throw new Exception("QR code data is too large - cannot create QR code.");
-
             return encodedRequest;
         }
     }

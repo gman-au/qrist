@@ -44,9 +44,22 @@ namespace Qrist.Adapters.Todoist
                 .AppendLine($"#### Confirm the following {TodoistProvider} item(s) to add:");
 
             foreach (var task in taskRequest?.Tasks ?? [])
+            {
                 confirmationMessage
-                    .AppendLine($"- {task.Content}")
-                    .AppendLine(string.IsNullOrEmpty(task.Description) ? null : $"\t{task.Description}");
+                    .AppendLine($"- **{task.Content}**");
+
+                if (!string.IsNullOrEmpty(task.Description))
+                {
+                    confirmationMessage
+                        .AppendLine($"\t - {task.Description}");
+                }
+
+                if ((task.Labels ?? []).Any())
+                {
+                    confirmationMessage
+                        .AppendLine($"\t - _Labels: {string.Join(", ", task.Labels)}_");
+                }
+            }
 
             return
                 confirmationMessage
