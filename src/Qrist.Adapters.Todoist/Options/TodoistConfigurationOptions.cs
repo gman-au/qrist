@@ -6,6 +6,8 @@ namespace Qrist.Adapters.Todoist.Options
 
         public string TokenRequestEndpoint { get; set; }
 
+        public string CreateTaskEndpoint { get; set; }
+
         public string ClientId { get; set; }
 
         public string ClientSecret { get; set; }

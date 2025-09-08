@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Qrist.Adapters.Todoist;
+using Qrist.Adapters.Todoist.Authorisation;
 using Qrist.Adapters.Todoist.Options;
 using Qrist.Application;
 using Qrist.Infrastructure;

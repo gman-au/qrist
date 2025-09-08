@@ -1,20 +1,20 @@
+@rendermode InteractiveServer
 @page "/Todoist/ProcessAction/{SessionId}"
 @using System.Threading
+@using Markdig
 @using Qrist.Interfaces
 @inject IQristApplication QristApplication
 @inject NavigationManager NavigationManager
 
-<h3>ProcessAction</h3>
+<p>@((MarkupString)_confirmationMessage)</p>
 
-<p>@_confirmationMessage</p>
-
-<button onclick="@(() => ClickButton())">Confirm</button>
+<button @onclick="@(ConfirmActionAsync)">Confirm</button>
 
 @code {
 
     [Parameter] public string SessionId { get; set; }
 
-    private readonly bool _confirmed = false;
+    private Guid? _sessionId;
 
     private string _confirmationMessage;
 
@@ -22,29 +22,23 @@
     {
         if (Guid.TryParse(SessionId, out var sessionId))
         {
+            _sessionId = sessionId;
+
             try
             {
-                if (!_confirmed)
-                {
-                    _confirmationMessage =
-                        await
-                            QristApplication
-                                .GetQrCodeActionConfirmationAsync(
-                                    sessionId,
-                                    CancellationToken.None
-                                );
-
-                    StateHasChanged();
-                }
-                else
-                {
+                var confirmationMessage =
                     await
                         QristApplication
-                            .ProcessQrCodeActionAsync(
+                            .GetQrCodeActionConfirmationAsync(
                                 sessionId,
                                 CancellationToken.None
                             );
-                }
+
+                _confirmationMessage =
+                    Markdown
+                        .ToHtml(confirmationMessage);
+
+                StateHasChanged();
             }
             catch (Exception ex)
             {
@@ -53,10 +47,24 @@
         }
     }
 
-    private void ClickButton()
+    private async Task ConfirmActionAsync()
     {
-        var fred = 0;
-        fred++;
+        if (_sessionId.HasValue)
+        {
+            try
+            {
+                await
+                    QristApplication
+                        .ProcessQrCodeActionAsync(
+                            _sessionId.Value,
+                            CancellationToken.None
+                        );
+            }
+            catch (Exception ex)
+            {
+                // TODO: redirect to error page
+            }
+        }
     }
 
 }

@@ -15,6 +15,7 @@ namespace Qrist.Interfaces
 
         Task ProcessAsync(
             QrCodeRequest requestData,
+            SessionStateItem sessionStateItem,
             CancellationToken cancellationToken = default
         );
     }

@@ -57,7 +57,11 @@ namespace Qrist.Application
 
             await
                 actioner
-                    .ProcessAsync(request, cancellationToken);
+                    .ProcessAsync(
+                        request,
+                        sessionStateItem,
+                        cancellationToken
+                    );
 
             logger
                 .LogInformation("Processed QR code successfully");

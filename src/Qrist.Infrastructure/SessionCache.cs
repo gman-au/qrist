@@ -39,7 +39,8 @@ namespace Qrist.Infrastructure
                 {
                     State = state,
                     Id = id,
-                    QrCodeData = qrCodeData
+                    QrCodeData = qrCodeData,
+                    AccessToken = accessToken
                 };
 
             _memoryCacheStates

@@ -8,4 +8,8 @@
       <ProjectReference Include="..\Qrist.Api.Host\Qrist.Api.Host.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Markdig" Version="0.41.3" />
+    </ItemGroup>
+
 </Project>

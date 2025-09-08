@@ -10,7 +10,7 @@ using Qrist.Adapters.Todoist.Definition;
 using Qrist.Adapters.Todoist.Options;
 using Qrist.Interfaces;
 
-namespace Qrist.Adapters.Todoist
+namespace Qrist.Adapters.Todoist.Authorisation
 {
     public class TodoistAuthoriser(
         ILogger<TodoistAuthoriser> logger,

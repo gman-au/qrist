@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Qrist.Adapters.Todoist
+namespace Qrist.Adapters.Todoist.Authorisation
 {
     public interface ITodoistAuthoriser
     {
