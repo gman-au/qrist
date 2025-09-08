@@ -41,7 +41,7 @@ namespace Qrist.Adapters.Todoist
             var confirmationMessage = new StringBuilder();
 
             confirmationMessage
-                .AppendLine($"Confirm the following {TodoistProvider} item(s) to add:");
+                .AppendLine($"#### Confirm the following {TodoistProvider} item(s) to add:");
 
             foreach (var task in taskRequest?.Tasks ?? [])
                 confirmationMessage

@@ -6,9 +6,15 @@
 @inject IQristApplication QristApplication
 @inject NavigationManager NavigationManager
 
-<p>@((MarkupString)_confirmationMessage)</p>
+<PageTitle>Qrist</PageTitle>
 
-<button @onclick="@(ConfirmActionAsync)">Confirm</button>
+<img src="todoist-logo.png" height="36px" alt="Todoist logo"/>
+
+<p>@((MarkupString)_confirmationMessage)</p>
+<hr/>
+<p class="confirm-footer">
+    <a class="todoist-button" @onclick="@(ConfirmActionAsync)">Confirm</a>
+</p>
 
 @code {
 
@@ -40,9 +46,10 @@
 
                 StateHasChanged();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // TODO: redirect to error page
+                NavigationManager
+                    .NavigateTo("/Error");
             }
         }
     }
@@ -59,10 +66,18 @@
                             _sessionId.Value,
                             CancellationToken.None
                         );
+
+                NavigationManager
+                    .NavigateTo("/Success");
             }
-            catch (Exception ex)
+            catch (NavigationException)
             {
-                // TODO: redirect to error page
+                throw;
+            }
+            catch (Exception)
+            {
+                NavigationManager
+                    .NavigateTo("/Error");
             }
         }
     }

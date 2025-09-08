@@ -1,10 +1,12 @@
 @page "/Todoist/Oauth"
 @using System.Threading
+@using Microsoft.Extensions.Logging
 @using Qrist.Adapters.Todoist.Authorisation
 @inject ITodoistAuthoriser TodoistAuthoriser
 @inject NavigationManager NavigationManager
+@inject ILogger<Oauth> Logger
 
-<h3>ProcessCode</h3>
+<PageTitle>Qrist</PageTitle>
 
 @code {
 
@@ -16,16 +18,31 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var id =
-            await
-                TodoistAuthoriser
-                    .RetrieveAndCacheAccessTokenByIdAsync(Code, State, CancellationToken.None);
+        try
+        {
+            var id =
+                await
+                    TodoistAuthoriser
+                        .RetrieveAndCacheAccessTokenByIdAsync(Code, State, CancellationToken.None);
 
-        if (!id.HasValue)
-            throw new Exception("There was an error.");
+            if (!id.HasValue)
+                throw new Exception("There was an error.");
 
-        NavigationManager
-            .NavigateTo($"/Todoist/ProcessAction/{id}");
+            NavigationManager
+                .NavigateTo($"/Todoist/ProcessAction/{id}");
+        }
+        catch (NavigationException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            Logger
+                .LogError("Oauth.razor error: {message}", ex.Message);
+
+            NavigationManager
+                .NavigateTo($"/Error");
+        }
     }
 
 }
