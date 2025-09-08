@@ -8,10 +8,10 @@ using Qrist.Interfaces;
 
 namespace Qrist.Infrastructure.QrCode.Encoding
 {
-    public class QrCodeEncoder(
+    public class RequestEncoder(
         ICompressor compressor,
-        ILogger<QrCodeEncoder> logger)
-        : IQrCodeEncoder
+        ILogger<RequestEncoder> logger)
+        : IRequestEncoder
     {
         private const int MaxQrCodeLengthBytes = 2953;
 
@@ -19,7 +19,6 @@ namespace Qrist.Infrastructure.QrCode.Encoding
             QrCodeRequest request,
             CancellationToken cancellationToken = default)
         {
-
             if (request == null)
                 throw new Exception("Request contains no data.");
 
@@ -29,28 +28,28 @@ namespace Qrist.Infrastructure.QrCode.Encoding
 
             // minify?
 
-            var qrCode =
+            var encodedRequest =
                 System.Text.Encoding
                     .Default
                     .GetBytes(jsonRequest);
 
             logger
-                .LogDebug("Original request size: {size}", qrCode.Length);
+                .LogDebug("Original request size: {size}", encodedRequest.Length);
 
             // compress
 
-            qrCode =
+            encodedRequest =
                 await
                     compressor
-                        .CompressAsync(qrCode, cancellationToken);
+                        .CompressAsync(encodedRequest, cancellationToken);
 
             logger
-                .LogDebug("Compressed request size: {size}", qrCode.Length);
+                .LogDebug("Compressed request size: {size}", encodedRequest.Length);
 
-            if (qrCode.Length > MaxQrCodeLengthBytes)
+            if (encodedRequest.Length > MaxQrCodeLengthBytes)
                 throw new Exception("QR code data is too large - cannot create QR code.");
 
-            return qrCode;
+            return encodedRequest;
         }
     }
 }

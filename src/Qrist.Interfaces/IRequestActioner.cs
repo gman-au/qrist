@@ -8,6 +8,11 @@ namespace Qrist.Interfaces
     {
         bool IsApplicable(string provider);
 
+        Task<string> GetConfirmationAsync(
+            QrCodeRequest qrCodeRequest,
+            CancellationToken cancellationToken = default
+        );
+
         Task ProcessAsync(
             QrCodeRequest requestData,
             CancellationToken cancellationToken = default

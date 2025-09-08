@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Qrist.Interfaces
 {
-    public interface IQrCodeDecoder
+    public interface IRequestDecoder
     {
         Task<byte[]> ProcessAsync(string base64QrCode,
             CancellationToken cancellationToken = default);

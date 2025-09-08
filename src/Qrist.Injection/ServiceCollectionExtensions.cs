@@ -6,6 +6,7 @@ using Qrist.Adapters.Todoist.Options;
 using Qrist.Application;
 using Qrist.Infrastructure;
 using Qrist.Infrastructure.Compression.Brotli;
+using Qrist.Infrastructure.Options;
 using Qrist.Infrastructure.QrCode.Encoding;
 using Qrist.Infrastructure.QrCode.Production;
 using Qrist.Interfaces;
@@ -20,19 +21,26 @@ namespace Qrist.Injection
         {
             services
                 .AddTransient<IQristApplication, QristApplication>()
-                .AddTransient<IQrCodeEncoder, QrCodeEncoder>()
-                .AddTransient<IQrCodeDecoder, QrCodeDecoder>()
+                .AddTransient<IRequestEncoder, RequestEncoder>()
+                .AddTransient<IRequestDecoder, RequestDecoder>()
                 .AddTransient<IQrCodeProcessor, QrCodeProcessor>()
                 .AddTransient<IHealthChecker, HealthChecker>()
                 .AddTransient<ICodeGenerator, CodeGenerator>();
 
             services
                 .AddTransient<ICompressor, BrotliCompressor>()
+                .AddTransient<IQristUrlBuilder, QristUrlBuilder>()
                 .AddTransient<IQrCodeGenerator, QrCodeGenerator>();
 
             services
                 .AddTransient<IRequestActioner, TodoistQrCodeActioner>()
                 .AddTransient<ITodoistAuthoriser, TodoistAuthoriser>();
+
+            services
+                .Configure<QristConfigurationOptions>(
+                    configuration
+                        .GetSection(nameof(QristConfigurationOptions))
+                );
 
             services
                 .Configure<TodoistConfigurationOptions>(

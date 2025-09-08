@@ -1,30 +1,65 @@
 @page "/Todoist/ProcessAction/{QrCodeData}"
 @using System.Threading
+@using System.Web
 @using Qrist.Interfaces
 @inject IQristApplication QristApplication
 @inject NavigationManager NavigationManager
 
 <h3>ProcessAction</h3>
 
+<p>@_confirmationMessage</p>
+
+<button onclick="@(() => ClickButton())">Confirm</button>
+
 @code {
 
     [Parameter] public string QrCodeData { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    private readonly bool _confirmed = false;
+
+    private string _confirmationMessage;
+
+    protected override async Task OnParametersSetAsync()
     {
-        if (string.IsNullOrEmpty(QrCodeData))
+        if (!string.IsNullOrEmpty(QrCodeData))
         {
             try
             {
-                await
-                    QristApplication
-                        .ProcessQrCodeAsync(QrCodeData, CancellationToken.None);
+                var qrCodeData = QrCodeData;
+
+                if (!_confirmed)
+                {
+                    _confirmationMessage =
+                        await
+                            QristApplication
+                                .GetQrCodeActionConfirmationAsync(
+                                    qrCodeData,
+                                    CancellationToken.None
+                                );
+
+                    StateHasChanged();
+                }
+                else
+                {
+                    await
+                        QristApplication
+                            .ProcessQrCodeActionAsync(
+                                qrCodeData,
+                                CancellationToken.None
+                            );
+                }
             }
             catch (Exception ex)
             {
                 // TODO: redirect to error page
             }
         }
+    }
+
+    private void ClickButton()
+    {
+        var fred = 0;
+        fred++;
     }
 
 }

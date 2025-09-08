@@ -4,7 +4,7 @@ using Qrist.Domain;
 
 namespace Qrist.Interfaces
 {
-    public interface IQrCodeEncoder
+    public interface IRequestEncoder
     {
         Task<byte[]> ProcessAsync(
             QrCodeRequest request,

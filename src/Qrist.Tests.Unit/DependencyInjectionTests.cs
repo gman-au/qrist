@@ -49,7 +49,7 @@ namespace Qrist.Tests.Unit
 
                 var qrCodeBuilderRequestHandler =
                     _provider
-                        .GetService<IQrCodeEncoder>();
+                        .GetService<IRequestEncoder>();
 
                 var qrCodeProcessor =
                     _provider

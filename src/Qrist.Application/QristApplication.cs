@@ -9,7 +9,8 @@ namespace Qrist.Application
 {
     public class QristApplication(
         IQrCodeGenerator qrCodeGenerator,
-        IQrCodeEncoder qrCodeEncoder,
+        IQristUrlBuilder urlBuilder,
+        IRequestEncoder requestEncoder,
         IQrCodeProcessor qrCodeProcessor,
         ILogger<QristApplication> logger
     ) : IQristApplication
@@ -21,33 +22,44 @@ namespace Qrist.Application
             logger
                 .LogInformation("Received produce QR code request");
 
-            var qrCodeData =
+            var encodedRequest =
                 await
-                    qrCodeEncoder
+                    requestEncoder
                         .ProcessAsync(request, cancellationToken);
 
-            var qrCodeString =
+            var requestString =
                 Convert
-                    .ToBase64String(qrCodeData);
+                    .ToBase64String(encodedRequest);
+
+            var completeUrlString =
+                urlBuilder
+                    .BuildFullUrl(request.Provider, requestString);
 
             var qrCodeImage =
                 await
                     qrCodeGenerator
                         .GenerateAsync(
-                            qrCodeString,
+                            completeUrlString,
                             cancellationToken
                         );
 
             return qrCodeImage;
         }
 
-        public async Task ProcessQrCodeAsync(
+        public async Task<string> GetQrCodeActionConfirmationAsync(
+            string code,
+            CancellationToken cancellationToken = default) =>
+            await
+                qrCodeProcessor
+                    .GetConfirmationAsync(code, cancellationToken);
+
+        public async Task ProcessQrCodeActionAsync(
             string code,
             CancellationToken cancellationToken = default)
         {
             await
                 qrCodeProcessor
-                    .ProcessAsync(code, cancellationToken);
+                    .ProcessActionAsync(code, cancellationToken);
         }
     }
 }

@@ -5,8 +5,8 @@ using Qrist.Interfaces;
 
 namespace Qrist.Infrastructure.QrCode.Encoding
 {
-    public class QrCodeDecoder(ICompressor compressor)
-        : IQrCodeDecoder
+    public class RequestDecoder(ICompressor compressor)
+        : IRequestDecoder
     {
         public async Task<byte[]> ProcessAsync(
             string base64QrCode,

@@ -5,7 +5,12 @@ namespace Qrist.Interfaces
 {
     public interface IQrCodeProcessor
     {
-        Task ProcessAsync(
+        Task<string> GetConfirmationAsync(
+            string base64QrCode,
+            CancellationToken cancellationToken = default
+        );
+
+        Task ProcessActionAsync(
             string base64QrCode,
             CancellationToken cancellationToken = default
         );

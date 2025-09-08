@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,31 @@ namespace Qrist.Adapters.Todoist
                     StringComparison.InvariantCultureIgnoreCase
                 );
 
+        public async Task<string> GetConfirmationAsync(
+            QrCodeRequest qrCodeRequest,
+            CancellationToken cancellationToken = default)
+        {
+            var taskRequest =
+                JsonSerializer
+                    .Deserialize<CreateTodoistTaskRequest>(qrCodeRequest?.Data) as CreateTodoistTaskRequest;
+
+            var confirmationMessage = new StringBuilder();
+
+            confirmationMessage
+                .AppendLine($"Confirm the following {TodoistProvider} item(s) to add:");
+
+            foreach (var task in taskRequest?.Tasks ?? [])
+            {
+                confirmationMessage
+                    .AppendLine($"- {task.Content}")
+                    .AppendLine(string.IsNullOrEmpty(task.Description) ? null : $"\t{task.Description}");
+            }
+
+            return
+                confirmationMessage
+                    .ToString();
+        }
+
         public async Task ProcessAsync(
             QrCodeRequest qrCodeRequest,
             CancellationToken cancellationToken = default
@@ -27,8 +53,7 @@ namespace Qrist.Adapters.Todoist
         {
             var data =
                 JsonSerializer
-                    .Deserialize<CreateTodoistTaskRequest>(qrCodeRequest?.Data);
-
+                    .Deserialize<CreateTodoistTaskRequest>(qrCodeRequest?.Data) as CreateTodoistTaskRequest;
         }
     }
 }

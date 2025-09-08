@@ -11,7 +11,11 @@ namespace Qrist.Interfaces
             CancellationToken cancellationToken = default
         );
 
-        Task ProcessQrCodeAsync(
+        Task<string> GetQrCodeActionConfirmationAsync(
+            string code,
+            CancellationToken cancellationToken = default);
+
+        Task ProcessQrCodeActionAsync(
             string code,
             CancellationToken cancellationToken = default
         );
