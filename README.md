@@ -47,10 +47,24 @@ If successful, you should be provided with a [base64 string representation](http
 
 There are many online tools that can convert this string into an image for you to print out or attach to online documents.
 
+<p align="center">
+    <img width="385" height="385" alt="example_qr_code" src="https://github.com/user-attachments/assets/f66de890-ebde-42b1-9d3f-41ed28f2a77f" />
+</p>
+
 ### Scanning the QR code (Todoist)
 * When the (above) QR code is scanned, you should be taken to the Qrist site, and redirected to the Todoist authentication endpoint.
 * Once authenticated, you should be presented with a confirmation prompt of the list of (tasks) you wish to add via the QR code. Click the **Confirm** button to proceed.
+
+<p align="center">
+    <img width="385" alt="qrist_confirmation" src="https://github.com/user-attachments/assets/addee968-3c7e-4237-a175-ec7b02b1a173" />
+</p>
+
 * If successful, you should receive a brief message indicating as such. You can now close the browser window.
+* If everything went well, you should now see the items added to your personal Todoist:
+
+<p align="center">
+  <img height="224" alt="todoist_list" src="https://github.com/user-attachments/assets/0d6f3a7d-cead-4692-9536-066eacbf4a66" />
+</p>
 
 > [!NOTE]
 > Other than briefly caching sessions for login redirects, Qrist, in its current form, is completely *stateless* in that codes are generated and processed without persistent storage.
