@@ -1,5 +1,9 @@
 # Qrist
 
+<p align="center">
+    <img width="300" alt="qrist_logo" src="https://github.com/user-attachments/assets/42975353-78a4-4767-8520-5ea0502ef04d" />
+</p>
+
 ![GitHub Release](https://img.shields.io/github/v/release/gman-au/qrist)
 
 ## Summary
