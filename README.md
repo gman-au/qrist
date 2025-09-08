@@ -52,5 +52,10 @@ There are many online tools that can convert this string into an image for you t
 * Once authenticated, you should be presented with a confirmation prompt of the list of (tasks) you wish to add via the QR code. Click the **Confirm** button to proceed.
 * If successful, you should receive a brief message indicating as such. You can now close the browser window.
 
+> [!NOTE]
+> Other than briefly caching sessions for login redirects, Qrist, in its current form, is completely *stateless* in that codes are generated and processed without persistent storage.
+>
+> QR codes have no 'owner', so any QR codes you create can be given to other users who can also scan them if they have the same 3rd party integration.
+
 ## Known limitations
 * [QR codes have a size limit](https://en.wikipedia.org/wiki/QR_code#Information_capacity). A given (JSON) request will be compressed to a smaller size and then (decompressed) when scanned on the Qrist site, however there is an upper limit to the amount of data that the request can handle.
