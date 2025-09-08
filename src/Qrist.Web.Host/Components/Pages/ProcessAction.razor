@@ -1,6 +1,5 @@
-@page "/Todoist/ProcessAction/{QrCodeData}"
+@page "/Todoist/ProcessAction/{SessionId}"
 @using System.Threading
-@using System.Web
 @using Qrist.Interfaces
 @inject IQristApplication QristApplication
 @inject NavigationManager NavigationManager
@@ -13,7 +12,7 @@
 
 @code {
 
-    [Parameter] public string QrCodeData { get; set; }
+    [Parameter] public string SessionId { get; set; }
 
     private readonly bool _confirmed = false;
 
@@ -21,19 +20,17 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if (!string.IsNullOrEmpty(QrCodeData))
+        if (Guid.TryParse(SessionId, out var sessionId))
         {
             try
             {
-                var qrCodeData = QrCodeData;
-
                 if (!_confirmed)
                 {
                     _confirmationMessage =
                         await
                             QristApplication
                                 .GetQrCodeActionConfirmationAsync(
-                                    qrCodeData,
+                                    sessionId,
                                     CancellationToken.None
                                 );
 
@@ -44,7 +41,7 @@
                     await
                         QristApplication
                             .ProcessQrCodeActionAsync(
-                                qrCodeData,
+                                sessionId,
                                 CancellationToken.None
                             );
                 }

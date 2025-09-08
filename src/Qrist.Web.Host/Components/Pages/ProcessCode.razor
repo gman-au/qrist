@@ -16,7 +16,7 @@
         var url =
             await
                 TodoistAuthoriser
-                    .GetRedirectUrlAsync(CancellationToken.None);
+                    .GetRedirectUrlAsync(QrCodeData, CancellationToken.None);
 
         if (string.IsNullOrEmpty(url))
             throw new Exception("URL not available. Please try again later.");

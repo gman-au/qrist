@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Qrist.Domain;
@@ -11,12 +12,12 @@ namespace Qrist.Interfaces
             CancellationToken cancellationToken = default
         );
 
-        Task<string> GetQrCodeActionConfirmationAsync(
-            string code,
+        public Task<string> GetQrCodeActionConfirmationAsync(
+            Guid sessionId,
             CancellationToken cancellationToken = default);
 
         Task ProcessQrCodeActionAsync(
-            string code,
+            Guid sessionId,
             CancellationToken cancellationToken = default
         );
     }

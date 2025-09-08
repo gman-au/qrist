@@ -37,6 +37,9 @@ namespace Qrist.Injection
                 .AddTransient<ITodoistAuthoriser, TodoistAuthoriser>();
 
             services
+                .AddSingleton<ISessionCache, SessionCache>();
+
+            services
                 .Configure<QristConfigurationOptions>(
                     configuration
                         .GetSection(nameof(QristConfigurationOptions))

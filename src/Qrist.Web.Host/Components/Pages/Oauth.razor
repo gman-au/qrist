@@ -16,18 +16,16 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var accessToken =
+        var id =
             await
                 TodoistAuthoriser
-                    .GetAccessTokenAsync(Code, CancellationToken.None);
+                    .RetrieveAndCacheAccessTokenByIdAsync(Code, State, CancellationToken.None);
 
-        if (string.IsNullOrEmpty(accessToken))
+        if (!id.HasValue)
             throw new Exception("There was an error.");
 
-        // TODO: delete this. QR code, state, and session identifier should go in scoped / singleton resolver
-
         NavigationManager
-            .NavigateTo($"/Todoist/ProcessAction/{Code}");
+            .NavigateTo($"/Todoist/ProcessAction/{id}");
     }
 
 }

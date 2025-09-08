@@ -13,17 +13,22 @@ namespace Qrist.Application
     public class QrCodeProcessor(
         IRequestDecoder requestDecoder,
         IEnumerable<IRequestActioner> actioners,
-        ILogger<QrCodeProcessor> logger
+        ILogger<QrCodeProcessor> logger,
+        ISessionCache sessionCache
     ) : IQrCodeProcessor
     {
         public async Task<string> GetConfirmationAsync(
-            string base64QrCode,
+            Guid sessionId,
             CancellationToken cancellationToken = default
         )
         {
+            var sessionStateItem =
+                sessionCache
+                    .RetrieveById(sessionId);
+
             var (request, actioner) =
                 await
-                    GetRequestAndActionerAsync(base64QrCode, cancellationToken);
+                    GetRequestAndActionerAsync(sessionStateItem.QrCodeData, cancellationToken);
 
             return
             await
@@ -32,16 +37,23 @@ namespace Qrist.Application
         }
 
         public async Task ProcessActionAsync(
-            string base64QrCode,
+            Guid sessionId,
             CancellationToken cancellationToken = default
         )
         {
             logger
-                .LogInformation("Received QR code to process");
+                .LogInformation("Received QR code to process {sessionId}", sessionId);
+
+            var sessionStateItem =
+                sessionCache
+                    .RetrieveById(sessionId);
 
             var (request, actioner) =
                 await
-                    GetRequestAndActionerAsync(base64QrCode, cancellationToken);
+                    GetRequestAndActionerAsync(
+                        sessionStateItem.QrCodeData,
+                        cancellationToken
+                    );
 
             await
                 actioner

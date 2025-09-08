@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Qrist.Domain;
@@ -38,24 +37,6 @@ namespace Qrist.Api.Host
                     }
                 )
                 .WithName("BuildCode");
-
-            return app;
-        }
-
-        [Obsolete]
-        internal static WebApplication MapQrCodeProcessorRequests(this WebApplication app)
-        {
-            app
-                .MapPost("/ProcessCode", async (
-                        [FromQuery] string code,
-                        [FromServices] IQristApplication qrApplication) =>
-                    {
-                        await
-                            qrApplication
-                                .ProcessQrCodeActionAsync(code);
-                    }
-                )
-                .WithName("ProcessCode");
 
             return app;
         }

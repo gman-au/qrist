@@ -14,33 +14,55 @@ namespace Qrist.Adapters.Todoist
 {
     public class TodoistAuthoriser(
         ILogger<TodoistAuthoriser> logger,
+        ISessionCache sessionCache,
         IOptions<TodoistConfigurationOptions> optionsAccessor,
         ICodeGenerator codeGenerator) : ITodoistAuthoriser
     {
         private const string Scopes = "data:read_write";
         private readonly TodoistConfigurationOptions _options = optionsAccessor.Value;
 
-        public async Task<string> GetRedirectUrlAsync(CancellationToken cancellationToken = default)
+        public async Task<string> GetRedirectUrlAsync(
+            string qrCodeData,
+            CancellationToken cancellationToken = default)
         {
-            var clientId = _options?.ClientId ?? throw new Exception($"{nameof(_options.ClientId)} not configured");
-            var authEndpoint = _options?.AuthRequestEndpoint ??
-                               throw new Exception($"{nameof(_options.AuthRequestEndpoint)} not configured");
+            var clientId =
+                _options?
+                    .ClientId
+                ?? throw new Exception($"{nameof(_options.ClientId)} not configured");
+
+            var authEndpoint =
+                _options?
+                    .AuthRequestEndpoint
+                ?? throw new Exception($"{nameof(_options.AuthRequestEndpoint)} not configured");
 
             var state =
                 codeGenerator
                     .Generate();
+
+            var id =
+                Guid
+                    .NewGuid();
+
+            sessionCache
+                .Store(id, state, qrCodeData);
 
             var url = $"{authEndpoint}?client_id={clientId}&scope={Scopes}&state={state}";
 
             return url;
         }
 
-        public async Task<string> GetAccessTokenAsync(
+        public async Task<Guid?> RetrieveAndCacheAccessTokenByIdAsync(
             string code,
+            string state,
             CancellationToken cancellationToken = default)
         {
             try
             {
+                // get existing session
+                var sessionStateItem =
+                    sessionCache
+                        .RetrieveByState(state);
+
                 var client = new HttpClient();
 
                 client.BaseAddress =
@@ -95,9 +117,18 @@ namespace Qrist.Adapters.Todoist
                             .Content
                             .ReadFromJsonAsync<TodoistAccessTokenResponse>(cancellationToken);
 
+                // update session cache
+                sessionCache
+                    .Store(
+                        sessionStateItem.Id,
+                        sessionStateItem.State,
+                        sessionStateItem.QrCodeData,
+                        accessTokenResponse.AccessToken
+                    );
+
                 return
-                    accessTokenResponse
-                        .AccessToken;
+                    sessionStateItem
+                        .Id;
             }
             catch (Exception e)
             {

@@ -47,19 +47,25 @@ namespace Qrist.Application
         }
 
         public async Task<string> GetQrCodeActionConfirmationAsync(
-            string code,
+            Guid sessionId,
             CancellationToken cancellationToken = default) =>
             await
                 qrCodeProcessor
-                    .GetConfirmationAsync(code, cancellationToken);
+                    .GetConfirmationAsync(
+                        sessionId,
+                        cancellationToken
+                    );
 
         public async Task ProcessQrCodeActionAsync(
-            string code,
+            Guid sessionId,
             CancellationToken cancellationToken = default)
         {
             await
                 qrCodeProcessor
-                    .ProcessActionAsync(code, cancellationToken);
+                    .ProcessActionAsync(
+                        sessionId,
+                        cancellationToken
+                    );
         }
     }
 }
