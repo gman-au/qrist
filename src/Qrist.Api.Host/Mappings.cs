@@ -40,5 +40,25 @@ namespace Qrist.Api.Host
 
             return app;
         }
+
+        internal static WebApplication MapUrlBuilderRequests(this WebApplication app)
+        {
+            app
+                .MapPost("/BuildUrl", async (
+                        [FromBody] QrCodeRequest request,
+                        [FromServices] IQristApplication qristApplication) =>
+                    {
+                        var cancellationToken = CancellationToken.None;
+
+                        return
+                            await
+                                qristApplication
+                                    .ProduceFullRequestUrlAsync(request, cancellationToken);
+                    }
+                )
+                .WithName("BuildUrl");
+
+            return app;
+        }
     }
 }

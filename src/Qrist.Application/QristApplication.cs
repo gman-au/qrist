@@ -22,18 +22,9 @@ namespace Qrist.Application
             logger
                 .LogInformation("Received produce QR code request");
 
-            var encodedRequest =
-                await
-                    requestEncoder
-                        .ProcessAsync(request, cancellationToken);
-
-            var requestString =
-                Convert
-                    .ToBase64String(encodedRequest);
-
             var completeUrlString =
-                urlBuilder
-                    .BuildFullUrl(request.Provider, requestString);
+                await
+                    ProduceActionUrlAsync(request, cancellationToken);
 
             var qrCodeImage =
                 await
@@ -44,6 +35,19 @@ namespace Qrist.Application
                         );
 
             return qrCodeImage;
+        }
+        public async Task<string> ProduceFullRequestUrlAsync(
+            QrCodeRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            logger
+                .LogInformation("Received produce URL request");
+
+            var completeUrlString =
+                await
+                    ProduceActionUrlAsync(request, cancellationToken);
+
+            return completeUrlString;
         }
 
         public async Task<string> GetQrCodeActionConfirmationAsync(
@@ -66,6 +70,26 @@ namespace Qrist.Application
                         sessionId,
                         cancellationToken
                     );
+        }
+
+        private async Task<string> ProduceActionUrlAsync(
+            QrCodeRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            var encodedRequest =
+                await
+                    requestEncoder
+                        .ProcessAsync(request, cancellationToken);
+
+            var requestString =
+                Convert
+                    .ToBase64String(encodedRequest);
+
+            var completeUrlString =
+                urlBuilder
+                    .BuildFullUrl(request.Provider, requestString);
+
+            return completeUrlString;
         }
     }
 }

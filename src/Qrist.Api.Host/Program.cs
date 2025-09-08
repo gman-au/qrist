@@ -39,5 +39,12 @@ app
     .MapHealthCheck()
     .MapQrCodeBuilderRequests();
 
+if (app.Environment.IsDevelopment())
+{
+    // shortcut to convert a request into a URL string (for development)
+    app
+        .MapUrlBuilderRequests();
+}
+
 app
     .Run();

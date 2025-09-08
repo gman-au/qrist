@@ -18,7 +18,7 @@ namespace Qrist.Adapters.Todoist
         IOptions<TodoistConfigurationOptions> optionsAccessor,
         ILogger<TodoistQrCodeActioner> logger) : IRequestActioner
     {
-        private const string TodoistProvider = "TODOIST";
+        private const string TodoistProvider = "Todoist";
 
         private readonly TodoistConfigurationOptions _options = optionsAccessor.Value;
 
@@ -79,50 +79,59 @@ namespace Qrist.Adapters.Todoist
                     throw new Exception($"{nameof(_options.CreateTaskEndpoint)} not configured")
                 );
 
-            var request =
-                new HttpRequestMessage(
-                    HttpMethod.Post,
-                    ""
-                );
-
-            request
-                .Headers
-                .Add(
-                    "ContentType",
-                    "application/json"
-                );
-
-            request
-                .Headers
-                .Add(
-                    "Authorization",
-                    $"Bearer {sessionStateItem.AccessToken}"
-                );
-
             foreach (var task in tasks)
-            {
-                var jsonTask =
-                    JsonSerializer
-                        .Serialize(task);
+                try
+                {
+                    var request =
+                        new HttpRequestMessage(
+                            HttpMethod.Post,
+                            ""
+                        );
 
-                request.Content =
-                    new StringContent(
-                        jsonTask,
-                        Encoding.Default,
-                        "application/json"
-                    );
+                    request
+                        .Headers
+                        .Add(
+                            "ContentType",
+                            "application/json"
+                        );
 
-                var httpResponse =
-                    await
-                        client
-                            .SendAsync(request, cancellationToken);
+                    request
+                        .Headers
+                        .Add(
+                            "Authorization",
+                            $"Bearer {sessionStateItem.AccessToken}"
+                        );
 
-                httpResponse
-                    .EnsureSuccessStatusCode();
+                    var jsonTask =
+                        JsonSerializer
+                            .Serialize(task);
 
-                logger
-                    .LogInformation("Success - added task {content} for session ID {sessionId}", task.Content, sessionStateItem.Id);
-            }
+                    request.Content =
+                        new StringContent(
+                            jsonTask,
+                            Encoding.Default,
+                            "application/json"
+                        );
+
+                    var httpResponse =
+                        await
+                            client
+                                .SendAsync(request, cancellationToken);
+
+                    httpResponse
+                        .EnsureSuccessStatusCode();
+
+                    logger
+                        .LogInformation("Success - added task {content} for session ID {sessionId}", task.Content, sessionStateItem.Id);
+                }
+                catch (Exception ex)
+                {
+                    logger
+                        .LogError("Error adding task {content} for session ID {sessionId}: {message}",
+                            task.Content,
+                            sessionStateItem.Id,
+                            ex.Message);
+                }
         }
     }
 }
