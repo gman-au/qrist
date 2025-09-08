@@ -1,4 +1,4 @@
-@page "/Todoist/ProcessCode/{QrCodeData}"
+@page "/Todoist/ProcessCode"
 @using System.Threading
 @using Microsoft.Extensions.Logging
 @using Qrist.Adapters.Todoist.Authorisation
@@ -10,8 +10,8 @@
 
 @code {
 
-    [Parameter]
-    public string QrCodeData { get; set; }
+    [Parameter, SupplyParameterFromQuery]
+    public string Code { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -20,7 +20,7 @@
             var url =
                 await
                     TodoistAuthoriser
-                        .GetRedirectUrlAsync(QrCodeData, CancellationToken.None);
+                        .GetRedirectUrlAsync(Code, CancellationToken.None);
 
             if (string.IsNullOrEmpty(url))
                 throw new Exception("URL not available. Please try again later.");

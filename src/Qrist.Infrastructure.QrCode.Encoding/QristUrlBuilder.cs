@@ -23,7 +23,7 @@ namespace Qrist.Infrastructure.QrCode.Encoding
                     .UrlEncode(encodedRequestData);
 
             return
-                $"{baseUrl}/{provider?.ToLower()}/{ProcessCodeRequestPath.ToLower()}/{encodedRequestData}";
+                $"{baseUrl}/{provider?.ToLower()}/{ProcessCodeRequestPath.ToLower()}?code={encodedRequestData}";
         }
     }
 }
