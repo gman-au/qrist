@@ -10,6 +10,7 @@
         <ProjectReference Include="..\Qrist.Infrastructure.Compression.Brotli\Qrist.Infrastructure.Compression.Brotli.csproj"/>
         <ProjectReference Include="..\Qrist.Infrastructure.QrCode.Encoding\Qrist.Infrastructure.QrCode.Encoding.csproj"/>
         <ProjectReference Include="..\Qrist.Infrastructure.QrCode.Production\Qrist.Infrastructure.QrCode.Production.csproj"/>
+        <ProjectReference Include="..\Qrist.Infrastructure.Table.Azure\Qrist.Infrastructure.Table.Azure.csproj" />
         <ProjectReference Include="..\Qrist.Infrastructure\Qrist.Infrastructure.csproj" />
         <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj"/>
     </ItemGroup>

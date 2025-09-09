@@ -10,6 +10,8 @@ using Qrist.Infrastructure.Compression.Brotli;
 using Qrist.Infrastructure.Options;
 using Qrist.Infrastructure.QrCode.Encoding;
 using Qrist.Infrastructure.QrCode.Production;
+using Qrist.Infrastructure.Table.Azure;
+using Qrist.Infrastructure.Table.Azure.Options;
 using Qrist.Interfaces;
 
 namespace Qrist.Injection
@@ -38,6 +40,9 @@ namespace Qrist.Injection
                 .AddTransient<ITodoistAuthoriser, TodoistAuthoriser>();
 
             services
+                .AddTransient<IKeyValueStorage, AzureTableStorage>();
+
+            services
                 .AddSingleton<ISessionCache, SessionCache>();
 
             services
@@ -50,6 +55,12 @@ namespace Qrist.Injection
                 .Configure<TodoistConfigurationOptions>(
                     configuration
                         .GetSection(nameof(TodoistConfigurationOptions))
+                );
+
+            services
+                .Configure<AzureTableStorageConfigurationOptions>(
+                    configuration
+                        .GetSection(nameof(AzureTableStorageConfigurationOptions))
                 );
 
             services
