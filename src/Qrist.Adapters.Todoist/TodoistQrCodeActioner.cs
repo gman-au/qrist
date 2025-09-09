@@ -18,15 +18,13 @@ namespace Qrist.Adapters.Todoist
         IOptions<TodoistConfigurationOptions> optionsAccessor,
         ILogger<TodoistQrCodeActioner> logger) : IRequestActioner
     {
-        private const string TodoistProvider = "Todoist";
-
         private readonly TodoistConfigurationOptions _options = optionsAccessor.Value;
 
         public bool IsApplicable(string provider) =>
             string
                 .Equals(
                     provider,
-                    TodoistProvider,
+                    TodoistConstants.Provider,
                     StringComparison.InvariantCultureIgnoreCase
                 );
 
@@ -41,7 +39,7 @@ namespace Qrist.Adapters.Todoist
             var confirmationMessage = new StringBuilder();
 
             confirmationMessage
-                .AppendLine($"#### Confirm the following {TodoistProvider} item(s) to add:");
+                .AppendLine($"#### Confirm the following {TodoistConstants.Provider} item(s) to add:");
 
             foreach (var task in taskRequest?.Tasks ?? [])
             {

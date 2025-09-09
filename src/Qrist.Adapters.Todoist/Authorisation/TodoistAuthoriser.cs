@@ -44,7 +44,12 @@ namespace Qrist.Adapters.Todoist.Authorisation
                     .NewGuid();
 
             sessionCache
-                .Store(id, state, qrCodeData);
+                .Store(
+                    TodoistConstants.Provider,
+                    id,
+                    state,
+                    qrCodeData
+                );
 
             var url = $"{authEndpoint}?client_id={clientId}&scope={Scopes}&state={state}";
 
@@ -120,6 +125,7 @@ namespace Qrist.Adapters.Todoist.Authorisation
                 // update session cache
                 sessionCache
                     .Store(
+                        TodoistConstants.Provider,
                         sessionStateItem.Id,
                         sessionStateItem.State,
                         sessionStateItem.QrCodeData,

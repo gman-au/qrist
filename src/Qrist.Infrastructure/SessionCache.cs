@@ -32,11 +32,12 @@ namespace Qrist.Infrastructure
                 );
         }
 
-        public void Store(Guid id, string state, string qrCodeData, string accessToken = null)
+        public void Store(string provider, Guid id, string state, string qrCodeData, string accessToken = null)
         {
             var sessionStateItem =
                 new SessionStateItem
                 {
+                    Provider = provider,
                     State = state,
                     Id = id,
                     QrCodeData = qrCodeData,

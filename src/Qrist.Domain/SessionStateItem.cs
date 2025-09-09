@@ -11,5 +11,7 @@ namespace Qrist.Domain
         public string QrCodeData { get; set; }
         
         public string AccessToken { get; set; }
+
+        public string Provider { get; set; }
     }
 }

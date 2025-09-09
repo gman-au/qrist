@@ -8,6 +8,7 @@ using Qrist.Interfaces;
 namespace Qrist.Application
 {
     public class QristApplication(
+        IKeyValueStorage keyValueStorage,
         IQrCodeGenerator qrCodeGenerator,
         IQristUrlBuilder urlBuilder,
         IRequestEncoder requestEncoder,
@@ -81,13 +82,26 @@ namespace Qrist.Application
                     requestEncoder
                         .ProcessAsync(request, cancellationToken);
 
-            var requestString =
+            var requestDataString =
                 Convert
                     .ToBase64String(encodedRequest);
 
+            // the request string goes into key value storage; we use the key as the lookup code
+            var tableStorageRowKey =
+                await
+                    keyValueStorage
+                        .StoreCodeDataAsync(
+                            request.Provider,
+                            requestDataString,
+                            cancellationToken
+                        );
+
             var completeUrlString =
                 urlBuilder
-                    .BuildFullUrl(request.Provider, requestString);
+                    .BuildFullUrl(
+                        request.Provider,
+                        tableStorageRowKey
+                    );
 
             return completeUrlString;
         }

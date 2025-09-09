@@ -12,6 +12,7 @@ namespace Qrist.Application
 {
     public class QrCodeProcessor(
         IRequestDecoder requestDecoder,
+        IKeyValueStorage keyValueStorage,
         IEnumerable<IRequestActioner> actioners,
         ILogger<QrCodeProcessor> logger,
         ISessionCache sessionCache
@@ -28,12 +29,16 @@ namespace Qrist.Application
 
             var (request, actioner) =
                 await
-                    GetRequestAndActionerAsync(sessionStateItem.QrCodeData, cancellationToken);
+                    GetRequestAndActionerAsync(
+                        sessionStateItem.Provider,
+                        sessionStateItem.QrCodeData,
+                        cancellationToken
+                    );
 
             return
-            await
-                actioner
-                    .GetConfirmationAsync(request, cancellationToken);
+                await
+                    actioner
+                        .GetConfirmationAsync(request, cancellationToken);
         }
 
         public async Task ProcessActionAsync(
@@ -53,6 +58,7 @@ namespace Qrist.Application
                 var (request, actioner) =
                     await
                         GetRequestAndActionerAsync(
+                            sessionStateItem.Provider,
                             sessionStateItem.QrCodeData,
                             cancellationToken
                         );
@@ -83,17 +89,28 @@ namespace Qrist.Application
         }
 
         private async Task<Tuple<QrCodeRequest, IRequestActioner>> GetRequestAndActionerAsync(
+            string provider,
             string base64QrCode,
             CancellationToken cancellationToken = default)
         {
-            var byteData =
+            // the byte data is the key to retrieve the KeyValueStore value
+            var valueByteData =
+                await
+                    keyValueStorage
+                        .LookupCodeDataAsync(
+                            provider,
+                            base64QrCode,
+                            cancellationToken
+                        );
+
+            var keyByteData =
                 await
                     requestDecoder
-                        .ProcessAsync(base64QrCode, cancellationToken);
+                        .ProcessAsync(valueByteData, cancellationToken);
 
             var request =
                 JsonSerializer
-                    .Deserialize<QrCodeRequest>(byteData);
+                    .Deserialize<QrCodeRequest>(keyByteData);
 
             if (request.Provider == null)
                 throw new Exception("Could not identify provider in QR code.");
