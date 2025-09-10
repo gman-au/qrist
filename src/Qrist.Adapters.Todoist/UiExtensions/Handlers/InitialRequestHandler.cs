@@ -25,6 +25,14 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                 todoistQrBundleCache
                     .RetrieveById(id);
 
+            var sourceId =
+                GetSourceId(request);
+
+            var alreadyExists =
+                (cachedRequest?
+                    .Tasks ?? [])
+                .Any(o => o.SourceId == sourceId);
+
             var card =
                 new AdaptiveCard();
 
@@ -74,25 +82,41 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                             Text = $"• {task.Content}"
                         });
 
-            card
-                .Body
-                .Add(new TextBlock
-                {
-                    Color = Color.Attention,
-                    Spacing = Spacing.Large,
-                    Size = FontSize.ExtraLarge,
-                    Text = "Item to add",
-                    Separator = true
-                });
+            if (alreadyExists)
+            {
+                card
+                    .Body
+                    .Add(new TextBlock
+                    {
+                        Color = Color.Warning,
+                        Spacing = Spacing.Large,
+                        Size = FontSize.ExtraLarge,
+                        Text = "This item is already in your QR bundle",
+                        Separator = true
+                    });
+            }
+            else
+            {
+                card
+                    .Body
+                    .Add(new TextBlock
+                    {
+                        Color = Color.Attention,
+                        Spacing = Spacing.Large,
+                        Size = FontSize.ExtraLarge,
+                        Text = "Item to add",
+                        Separator = true
+                    });
 
-            card
-                .Body
-                .Add(new TextBlock
-                {
-                    Spacing = Spacing.Large,
-                    Size = FontSize.Medium,
-                    Text = $"• {action?.Params?.Content}"
-                });
+                card
+                    .Body
+                    .Add(new TextBlock
+                    {
+                        Spacing = Spacing.Large,
+                        Size = FontSize.Medium,
+                        Text = $"{action?.Params?.Content}"
+                    });
+            }
 
             card
                 .Body
@@ -101,12 +125,14 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                     Spacing = Spacing.Large,
                     Actions =
                     {
-                        new ActionSubmit
-                        {
-                            Id = TodoistConstants.ActionAddToBundle,
-                            Style = ActionStyle.Positive,
-                            Title = "Add this item to my QR bundle"
-                        },
+                        alreadyExists
+                            ? null
+                            : new ActionSubmit
+                            {
+                                Id = TodoistConstants.ActionAddToBundle,
+                                Style = ActionStyle.Positive,
+                                Title = "Add this item to my QR bundle"
+                            },
                         new ActionSubmit
                         {
                             Id = TodoistConstants.ActionClearBundle,

@@ -21,6 +21,9 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
             var id =
                 GetId(request);
 
+            var sourceId =
+                GetSourceId(request);
+
             var action =
                 request?
                     .Action;
@@ -37,6 +40,7 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
             taskList
                 .Add(new TodoistApiTask
                 {
+                    SourceId = sourceId,
                     Content = action?.Params?.Content,
                     Description = null,
                     Priority = 0

@@ -14,9 +14,23 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                     .Id;
 
             if (!id.HasValue)
-                throw new Exception("Id not found in Todoist request");
+                throw new Exception("ID not found in Todoist request");
 
             return id.Value;
+        }
+
+        protected string GetSourceId(TodoistRequest request)
+        {
+            var sourceId =
+                request?
+                    .Action?
+                    .Params?
+                    .SourceId;
+
+            if (string.IsNullOrEmpty(sourceId))
+                throw new Exception("Source ID not found in Todoist request");
+
+            return sourceId;
         }
     }
 }
