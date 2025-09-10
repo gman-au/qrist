@@ -45,7 +45,10 @@ namespace Qrist.Injection
             services
                 .AddTransient<ITodoistActionHandler, InitialRequestHandler>()
                 .AddTransient<ITodoistActionHandler, AddToBundleHandler>()
-                .AddTransient<ITodoistActionHandler, ClearBundleHandler>();
+                .AddTransient<ITodoistActionHandler, ClearBundleHandler>()
+                .AddTransient<ITodoistActionHandler, ConfirmClearBundleHandler>()
+                .AddTransient<ITodoistActionHandler, ConfirmGenerateQrCodeHandler>()
+                .AddTransient<ITodoistActionHandler, CancelConfirmationHandler>();
 
             services
                 .AddTransient<IKeyValueStorage, AzureTableStorage>();

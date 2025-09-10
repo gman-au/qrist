@@ -16,6 +16,7 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
         IOptions<TodoistConfigurationOptions> optionsAccessor) : ActionHandlerBase, ITodoistActionHandler
     {
         private readonly TodoistConfigurationOptions _options = optionsAccessor.Value;
+
         public bool IsApplicable(TodoistRequest request) => request?.Action?.ActionType == TodoistConstants.ActionTypeInitial;
 
         public TodoistResponse Handle(TodoistRequest request)
@@ -39,11 +40,14 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                     .Tasks ?? [])
                 .Any(o => o.SourceId == sourceId);
 
+            var isEmpty =
+                !(cachedRequest?.Tasks ?? []).Any();
+
             var card =
                 new AdaptiveCard();
 
-            var listContainerItems =
-                new List<CardElement>();
+            var listContainerItems
+                = GetListContainerItems(cachedRequest);
 
             var nextContainerItems =
                 new List<CardElement>();
@@ -53,40 +57,6 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
 
             var topLevelContainerItems =
                 new List<CardElement>();
-
-            listContainerItems
-                .Add(new TextBlock
-                {
-                    Color = Color.Accent,
-                    Size = FontSize.ExtraLarge,
-                    Text = "Your current QR bundle"
-                });
-
-            if (!(cachedRequest?.Tasks ?? []).Any())
-                listContainerItems
-                    .Add(new TextBlock
-                    {
-                        Size = FontSize.Medium,
-                        Text = "Empty",
-                        IsSubtle = true
-                    });
-            else
-                foreach (var task in cachedRequest?.Tasks ?? [])
-                    listContainerItems
-                        .Add(new RichTextBlock
-                        {
-                            Separator = true,
-                            Inlines =
-                            [
-                                // Content
-                                new TextRun
-                                {
-                                    Text = task.Content,
-                                    Size = FontSize.Medium,
-                                    Weight = FontWeight.Default
-                                }
-                            ]
-                        });
 
             if (alreadyExists)
             {
@@ -132,15 +102,25 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                             : new ActionSubmit
                             {
                                 Id = TodoistConstants.ActionAddToBundle,
-                                Style = ActionStyle.Positive,
-                                Title = "Add this item to my QR bundle"
+                                Style = ActionStyle.Default,
+                                Title = "Add to QR bundle"
                             },
-                        new ActionSubmit
-                        {
-                            Id = TodoistConstants.ActionClearBundle,
-                            Style = ActionStyle.Destructive,
-                            Title = "Clear my QR bundle"
-                        }
+                        isEmpty
+                            ? null
+                            : new ActionSubmit
+                            {
+                                Id = TodoistConstants.ConfirmClearBundle,
+                                Style = ActionStyle.Destructive,
+                                Title = "Clear QR bundle"
+                            },
+                        isEmpty
+                            ? null
+                            : new ActionSubmit
+                            {
+                                Id = TodoistConstants.ConfirmGenerateQrCode,
+                                Style = ActionStyle.Positive,
+                                Title = "Create QR code"
+                            }
                     }
                 });
 
@@ -150,7 +130,9 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                     {
                         Spacing = Spacing.Large,
                         Separator = true,
-                        Items = listContainerItems
+                        Items =
+                            listContainerItems
+                                .ToList()
                     });
 
             topLevelContainerItems
