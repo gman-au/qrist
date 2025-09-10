@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure", "Qri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.Infrastructure.Table.Azure", "Qrist.Infrastructure.Table.Azure\Qrist.Infrastructure.Table.Azure.csproj", "{2EFDBE25-A700-4B44-9AF3-05B10973A010}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qrist.UiExtensions.Todoist", "Qrist.UiExtensions.Todoist\Qrist.UiExtensions.Todoist.csproj", "{DD69D59C-F407-439C-B794-994E2755513F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,5 +86,9 @@ Global
 		{2EFDBE25-A700-4B44-9AF3-05B10973A010}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EFDBE25-A700-4B44-9AF3-05B10973A010}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EFDBE25-A700-4B44-9AF3-05B10973A010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD69D59C-F407-439C-B794-994E2755513F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD69D59C-F407-439C-B794-994E2755513F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD69D59C-F407-439C-B794-994E2755513F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD69D59C-F407-439C-B794-994E2755513F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

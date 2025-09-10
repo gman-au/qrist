@@ -13,6 +13,7 @@ using Qrist.Infrastructure.QrCode.Production;
 using Qrist.Infrastructure.Table.Azure;
 using Qrist.Infrastructure.Table.Azure.Options;
 using Qrist.Interfaces;
+using Qrist.UiExtensions.Todoist;
 
 namespace Qrist.Injection
 {
@@ -37,7 +38,8 @@ namespace Qrist.Injection
 
             services
                 .AddTransient<IRequestActioner, TodoistQrCodeActioner>()
-                .AddTransient<ITodoistAuthoriser, TodoistAuthoriser>();
+                .AddTransient<ITodoistAuthoriser, TodoistAuthoriser>()
+                .AddTransient<ITodoistCardHandler, TodoistCardHandler>();
 
             services
                 .AddTransient<IKeyValueStorage, AzureTableStorage>();

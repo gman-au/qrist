@@ -12,6 +12,7 @@
       <ProjectReference Include="..\Qrist.Adapters.Todoist\Qrist.Adapters.Todoist.csproj" />
       <ProjectReference Include="..\Qrist.Injection\Qrist.Injection.csproj" />
       <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj" />
+      <ProjectReference Include="..\Qrist.UiExtensions.Todoist\Qrist.UiExtensions.Todoist.csproj" />
     </ItemGroup>
 
 </Project>
