@@ -51,7 +51,7 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                     {
                         new ActionSubmit
                         {
-                            Id = TodoistConstants.ActionAddToBundle,
+                            Id = TodoistConstants.ActionClearBundle,
                             Style = ActionStyle.Destructive,
                             Title = "Confirm"
                         },
