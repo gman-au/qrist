@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Qrist.Injection;
 using Qrist.Web.Host.Components;
-using Qrist.Web.Host.Middleware;
 
 var builder =
     WebApplication
@@ -40,11 +39,6 @@ if (!app.Environment.IsDevelopment())
 
     app
         .UseHsts();
-}
-else
-{
-    app
-        .UseRequestLogging();
 }
 
 app
