@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Qrist.Adapters.Todoist;
 using Qrist.Adapters.Todoist.Authorisation;
 using Qrist.Adapters.Todoist.Options;
+using Qrist.Adapters.Todoist.UiExtensions;
 using Qrist.Application;
 using Qrist.Infrastructure;
 using Qrist.Infrastructure.Compression.Brotli;
@@ -13,7 +14,6 @@ using Qrist.Infrastructure.QrCode.Production;
 using Qrist.Infrastructure.Table.Azure;
 using Qrist.Infrastructure.Table.Azure.Options;
 using Qrist.Interfaces;
-using Qrist.UiExtensions.Todoist;
 
 namespace Qrist.Injection
 {

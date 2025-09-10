@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Qrist.Adapters.Todoist.Definition;
 using Qrist.Adapters.Todoist.Options;
 using Qrist.Domain;
+using Qrist.Domain.Todoist.API;
 using Qrist.Interfaces;
 
 namespace Qrist.Adapters.Todoist
@@ -34,7 +34,7 @@ namespace Qrist.Adapters.Todoist
         {
             var taskRequest =
                 JsonSerializer
-                    .Deserialize<CreateTodoistTaskRequest>(qrCodeRequest?.Data) as CreateTodoistTaskRequest;
+                    .Deserialize<CreateTodoistTaskApiRequest>(qrCodeRequest?.Data) as CreateTodoistTaskApiRequest;
 
             var confirmationMessage = new StringBuilder();
 
@@ -72,7 +72,7 @@ namespace Qrist.Adapters.Todoist
         {
             var taskRequest =
                 JsonSerializer
-                    .Deserialize<CreateTodoistTaskRequest>(qrCodeRequest?.Data) as CreateTodoistTaskRequest;
+                    .Deserialize<CreateTodoistTaskApiRequest>(qrCodeRequest?.Data) as CreateTodoistTaskApiRequest;
 
             var tasks =
                 (taskRequest?.Tasks ?? [])

@@ -2,8 +2,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Qrist.UiExtensions.Todoist;
-using Qrist.UiExtensions.Todoist.Definition.Requests;
+using Qrist.Adapters.Todoist.UiExtensions;
+using Qrist.Domain.Todoist.UiExtensions.Requests;
 
 namespace Qrist.Web.Host.Controllers
 {
