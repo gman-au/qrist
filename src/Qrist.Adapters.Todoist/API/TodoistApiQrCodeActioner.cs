@@ -9,14 +9,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Qrist.Adapters.Todoist.Options;
 using Qrist.Domain;
+using Qrist.Domain.Todoist;
 using Qrist.Domain.Todoist.API;
 using Qrist.Interfaces;
 
-namespace Qrist.Adapters.Todoist
+namespace Qrist.Adapters.Todoist.API
 {
-    public class TodoistQrCodeActioner(
+    public class TodoistApiQrCodeActioner(
         IOptions<TodoistConfigurationOptions> optionsAccessor,
-        ILogger<TodoistQrCodeActioner> logger) : IRequestActioner
+        ILogger<TodoistApiQrCodeActioner> logger) : IRequestActioner
     {
         private readonly TodoistConfigurationOptions _options = optionsAccessor.Value;
 

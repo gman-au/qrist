@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Qrist.Adapters.Todoist;
+using Qrist.Adapters.Todoist.API;
 using Qrist.Adapters.Todoist.Authorisation;
 using Qrist.Adapters.Todoist.Options;
 using Qrist.Adapters.Todoist.UiExtensions;
@@ -37,7 +37,7 @@ namespace Qrist.Injection
                 .AddTransient<IQrCodeGenerator, QrCodeGenerator>();
 
             services
-                .AddTransient<IRequestActioner, TodoistQrCodeActioner>()
+                .AddTransient<IRequestActioner, TodoistApiQrCodeActioner>()
                 .AddTransient<ITodoistAuthoriser, TodoistAuthoriser>()
                 .AddTransient<ITodoistCardHandler, TodoistCardHandler>();
 

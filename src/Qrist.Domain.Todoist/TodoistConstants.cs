@@ -1,4 +1,4 @@
-namespace Qrist.Adapters.Todoist
+namespace Qrist.Domain.Todoist
 {
     public static class TodoistConstants
     {

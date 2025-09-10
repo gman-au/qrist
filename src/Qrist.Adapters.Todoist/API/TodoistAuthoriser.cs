@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Qrist.Adapters.Todoist.Options;
+using Qrist.Domain.Todoist;
 using Qrist.Domain.Todoist.API;
 using Qrist.Interfaces;
 
