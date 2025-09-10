@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Qrist.Adapters.Todoist;
+using Qrist.Adapters.Todoist.API;
 using Qrist.Adapters.Todoist.Authorisation;
 using Qrist.Adapters.Todoist.Options;
+using Qrist.Adapters.Todoist.UiExtensions;
+using Qrist.Adapters.Todoist.UiExtensions.Handlers;
 using Qrist.Application;
 using Qrist.Infrastructure;
 using Qrist.Infrastructure.Compression.Brotli;
@@ -36,14 +38,25 @@ namespace Qrist.Injection
                 .AddTransient<IQrCodeGenerator, QrCodeGenerator>();
 
             services
-                .AddTransient<IRequestActioner, TodoistQrCodeActioner>()
-                .AddTransient<ITodoistAuthoriser, TodoistAuthoriser>();
+                .AddTransient<IRequestActioner, TodoistApiQrCodeActioner>()
+                .AddTransient<ITodoistAuthoriser, TodoistAuthoriser>()
+                .AddTransient<ITodoistCardHandler, TodoistCardHandler>();
+
+            services
+                .AddTransient<ITodoistActionHandler, InitialRequestHandler>()
+                .AddTransient<ITodoistActionHandler, AddToBundleHandler>()
+                .AddTransient<ITodoistActionHandler, ClearBundleHandler>()
+                .AddTransient<ITodoistActionHandler, ConfirmClearBundleHandler>()
+                .AddTransient<ITodoistActionHandler, ConfirmGenerateQrCodeHandler>()
+                .AddTransient<ITodoistActionHandler, CancelConfirmationHandler>()
+                .AddTransient<ITodoistActionHandler, GenerateQrCodeHandler>();
 
             services
                 .AddTransient<IKeyValueStorage, AzureTableStorage>();
 
             services
-                .AddSingleton<ISessionCache, SessionCache>();
+                .AddSingleton<ISessionCache, SessionCache>()
+                .AddSingleton<ITodoistQrBundleCache, TodoistQrBundleCache>();
 
             services
                 .Configure<QristConfigurationOptions>(

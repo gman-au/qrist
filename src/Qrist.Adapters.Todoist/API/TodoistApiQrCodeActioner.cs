@@ -7,16 +7,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Qrist.Adapters.Todoist.Definition;
 using Qrist.Adapters.Todoist.Options;
 using Qrist.Domain;
+using Qrist.Domain.Todoist;
+using Qrist.Domain.Todoist.API;
 using Qrist.Interfaces;
 
-namespace Qrist.Adapters.Todoist
+namespace Qrist.Adapters.Todoist.API
 {
-    public class TodoistQrCodeActioner(
+    public class TodoistApiQrCodeActioner(
         IOptions<TodoistConfigurationOptions> optionsAccessor,
-        ILogger<TodoistQrCodeActioner> logger) : IRequestActioner
+        ILogger<TodoistApiQrCodeActioner> logger) : IRequestActioner
     {
         private readonly TodoistConfigurationOptions _options = optionsAccessor.Value;
 
@@ -34,7 +35,7 @@ namespace Qrist.Adapters.Todoist
         {
             var taskRequest =
                 JsonSerializer
-                    .Deserialize<CreateTodoistTaskRequest>(qrCodeRequest?.Data) as CreateTodoistTaskRequest;
+                    .Deserialize<CreateTodoistTaskApiRequest>(qrCodeRequest?.Data) as CreateTodoistTaskApiRequest;
 
             var confirmationMessage = new StringBuilder();
 
@@ -72,7 +73,7 @@ namespace Qrist.Adapters.Todoist
         {
             var taskRequest =
                 JsonSerializer
-                    .Deserialize<CreateTodoistTaskRequest>(qrCodeRequest?.Data) as CreateTodoistTaskRequest;
+                    .Deserialize<CreateTodoistTaskApiRequest>(qrCodeRequest?.Data) as CreateTodoistTaskApiRequest;
 
             var tasks =
                 (taskRequest?.Tasks ?? [])

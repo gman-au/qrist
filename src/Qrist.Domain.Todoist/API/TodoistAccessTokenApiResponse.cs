@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace Qrist.Adapters.Todoist.Definition
+namespace Qrist.Domain.Todoist.API
 {
-    public class TodoistAccessTokenResponse
+    public class TodoistAccessTokenApiResponse
     {
         [JsonPropertyName("access_token")] public string AccessToken { get; set; }
 

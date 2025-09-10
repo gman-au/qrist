@@ -13,5 +13,7 @@ namespace Qrist.Adapters.Todoist.Options
         public string ClientSecret { get; set; }
 
         public string VerificationToken { get; set; }
+
+        public string BackgroundImageUrl { get; set; }
     }
 }

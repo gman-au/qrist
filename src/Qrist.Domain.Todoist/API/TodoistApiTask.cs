@@ -1,9 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Qrist.Adapters.Todoist.Definition
+namespace Qrist.Domain.Todoist.API
 {
-    public class TodoistTask
+    public class TodoistApiTask
     {
+        [JsonIgnore] public string SourceId { get; set; }
+
         [JsonPropertyName("content")] public string Content { get; set; }
 
         [JsonPropertyName("description")] public string Description { get; set; }
