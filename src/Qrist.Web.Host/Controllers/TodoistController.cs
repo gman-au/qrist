@@ -1,5 +1,4 @@
 using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -44,10 +43,8 @@ namespace Qrist.Web.Host.Controllers
                     _todoistCardHandler
                         .ProcessAsync(request);
 
-            var jsonString = JsonSerializer.Serialize(response);
-
             _logger
-                .LogInformation($"Response: {jsonString}");
+                .LogInformation("Processed request");
 
             return
                 new OkObjectResult(response);
