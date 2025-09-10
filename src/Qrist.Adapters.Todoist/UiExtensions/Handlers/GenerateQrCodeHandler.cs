@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using Qrist.Adapters.Todoist.Options;
+using Qrist.Domain;
 using Qrist.Domain.Todoist;
 using Qrist.Domain.Todoist.UiExtensions;
-using Qrist.Domain.Todoist.UiExtensions.Actions;
 using Qrist.Domain.Todoist.UiExtensions.CardElements;
 using Qrist.Domain.Todoist.UiExtensions.Requests;
 using Qrist.Domain.Todoist.UiExtensions.Responses;
@@ -38,9 +38,16 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                 todoistQrBundleCache
                     .RetrieveById(id);
 
-            // convert CreateTodoistTaskApiRequest to QrCodeRequest
-            /*qristApplication
-                .ProduceQrCodeAsync();*/
+            var qrCodeRequest = new QrCodeRequest
+            {
+                Provider = TodoistConstants.Provider,
+                Data = cachedRequest
+            };
+
+            var base64Image =
+                qristApplication
+                    .ProduceQrCodeAsync(qrCodeRequest)
+                    .Result;
 
             var card =
                 new AdaptiveCard();
@@ -54,7 +61,6 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
             var topLevelContainerItems =
                 new List<CardElement>();
 
-            // add image as
             nextContainerItems
                 .Add(new TextBlock
                 {
@@ -96,7 +102,7 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                                 {
                                     Spacing = Spacing.Large,
                                     Url =
-                                        "https://www.shutterstock.com/image-photo/domestic-pig-standing-front-sticking-600nw-2472113621.jpg",
+                                        $"data:image/png;base64,{base64Image}",
                                     AltText = "QR code",
                                     Height = "300px",
                                     Width = "300px",
