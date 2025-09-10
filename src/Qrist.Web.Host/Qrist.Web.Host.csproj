@@ -14,4 +14,8 @@
       <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Infrastructure\" />
+    </ItemGroup>
+
 </Project>

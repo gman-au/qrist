@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Qrist.Injection;
@@ -40,6 +41,17 @@ if (!app.Environment.IsDevelopment())
     app
         .UseHsts();
 }
+
+app
+    .Use(next => async context =>
+    {
+        context
+            .Request
+            .EnableBuffering();
+
+        await
+            next(context);
+    });
 
 app
     .UseHttpsRedirection();
