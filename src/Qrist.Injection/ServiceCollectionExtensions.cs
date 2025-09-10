@@ -14,6 +14,7 @@ using Qrist.Infrastructure.QrCode.Encoding;
 using Qrist.Infrastructure.QrCode.Production;
 using Qrist.Infrastructure.Table.Azure;
 using Qrist.Infrastructure.Table.Azure.Options;
+using Qrist.Infrastructure.Web;
 using Qrist.Interfaces;
 
 namespace Qrist.Injection
@@ -40,7 +41,8 @@ namespace Qrist.Injection
             services
                 .AddTransient<IRequestActioner, TodoistApiQrCodeActioner>()
                 .AddTransient<ITodoistAuthoriser, TodoistAuthoriser>()
-                .AddTransient<ITodoistCardHandler, TodoistCardHandler>();
+                .AddTransient<ITodoistCardHandler, TodoistCardHandler>()
+                .AddTransient<ITodoistRequestValidator, TodoistRequestValidator>();
 
             services
                 .AddTransient<ITodoistActionHandler, InitialRequestHandler>()
