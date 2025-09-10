@@ -5,6 +5,7 @@ using Qrist.Adapters.Todoist.API;
 using Qrist.Adapters.Todoist.Authorisation;
 using Qrist.Adapters.Todoist.Options;
 using Qrist.Adapters.Todoist.UiExtensions;
+using Qrist.Adapters.Todoist.UiExtensions.Handlers;
 using Qrist.Application;
 using Qrist.Infrastructure;
 using Qrist.Infrastructure.Compression.Brotli;
@@ -42,10 +43,16 @@ namespace Qrist.Injection
                 .AddTransient<ITodoistCardHandler, TodoistCardHandler>();
 
             services
+                .AddTransient<ITodoistActionHandler, InitialRequestHandler>()
+                .AddTransient<ITodoistActionHandler, AddToBundleHandler>()
+                .AddTransient<ITodoistActionHandler, ClearBundleHandler>();
+
+            services
                 .AddTransient<IKeyValueStorage, AzureTableStorage>();
 
             services
-                .AddSingleton<ISessionCache, SessionCache>();
+                .AddSingleton<ISessionCache, SessionCache>()
+                .AddSingleton<ITodoistQrBundleCache, TodoistQrBundleCache>();
 
             services
                 .Configure<QristConfigurationOptions>(

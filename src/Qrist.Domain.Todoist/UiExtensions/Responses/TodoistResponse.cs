@@ -9,7 +9,6 @@ namespace Qrist.Domain.Todoist.UiExtensions.Responses
         [JsonPropertyName("card")]
         public AdaptiveCard Card { get; set; }
 
-        [JsonPropertyName("bridges")]
-        public List<Bridge> Bridges { get; set; }
+        [JsonPropertyName("bridges")] public List<Bridge> Bridges { get; set; } = [];
     }
 }

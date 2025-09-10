@@ -13,7 +13,6 @@
         <ProjectReference Include="..\Qrist.Infrastructure.Table.Azure\Qrist.Infrastructure.Table.Azure.csproj" />
         <ProjectReference Include="..\Qrist.Infrastructure\Qrist.Infrastructure.csproj" />
         <ProjectReference Include="..\Qrist.Interfaces\Qrist.Interfaces.csproj"/>
-        <ProjectReference Include="..\Qrist.UiExtensions.Todoist\Qrist.UiExtensions.Todoist.csproj" />
     </ItemGroup>
 
     <ItemGroup>

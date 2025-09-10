@@ -26,5 +26,8 @@ namespace Qrist.Domain.Todoist.UiExtensions.CardElements
         [JsonPropertyName("spacing")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Spacing? Spacing { get; set; }
+
+        [JsonPropertyName("separator")]
+        public bool Separator { get; set; }
     }
 }

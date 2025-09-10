@@ -1,30 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Qrist.Domain.Todoist.UiExtensions;
-using Qrist.Domain.Todoist.UiExtensions.Actions;
-using Qrist.Domain.Todoist.UiExtensions.Bridges;
-using Qrist.Domain.Todoist.UiExtensions.CardElements;
+using Microsoft.Extensions.Logging;
+using Qrist.Adapters.Todoist.UiExtensions.Handlers;
 using Qrist.Domain.Todoist.UiExtensions.Requests;
 using Qrist.Domain.Todoist.UiExtensions.Responses;
 
 namespace Qrist.Adapters.Todoist.UiExtensions
 {
-    public class TodoistCardHandler : ITodoistCardHandler
+    public class TodoistCardHandler(
+        ILogger<TodoistCardHandler> logger,
+        IEnumerable<ITodoistActionHandler> handlers)
+        : ITodoistCardHandler
     {
         public async Task<TodoistResponse> ProcessAsync(TodoistRequest request)
         {
-            if (request.Action.ActionType == "initial")
+            try
             {
-                var card = new AdaptiveCard();
-                card.Body.Add(new TextBlock { Text = "Hello from C#!" });
-                card.Body.Add(new ActionSet
-                {
-                    Actions = { new ActionSubmit { Id = "submit", Title = "Click me!" } }
-                });
+                var matchingHandler =
+                    handlers
+                        .FirstOrDefault(o => o.IsApplicable(request));
 
-                return new TodoistResponse { Card = card };
+                if (matchingHandler == null)
+                    throw new Exception("No matching TodoistActionHandler found in configuration.");
+
+                return
+                    matchingHandler
+                        .Handle(request);
             }
+            catch (Exception ex)
+            {
+                logger
+                    .LogError("There was an error processing the Todoist UI Extension request: {message}", ex.Message);
 
-            return new TodoistResponse { Bridges = { new FinishedBridge() }  };
+                throw;
+            }
         }
     }
 }
