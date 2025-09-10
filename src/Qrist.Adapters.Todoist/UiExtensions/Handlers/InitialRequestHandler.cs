@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Options;
+using Qrist.Adapters.Todoist.Options;
 using Qrist.Domain.Todoist;
 using Qrist.Domain.Todoist.UiExtensions;
 using Qrist.Domain.Todoist.UiExtensions.Actions;
@@ -8,8 +11,11 @@ using Qrist.Domain.Todoist.UiExtensions.Responses;
 
 namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
 {
-    public class InitialRequestHandler(ITodoistQrBundleCache todoistQrBundleCache) : ActionHandlerBase, ITodoistActionHandler
+    public class InitialRequestHandler(
+        ITodoistQrBundleCache todoistQrBundleCache,
+        IOptions<TodoistConfigurationOptions> optionsAccessor) : ActionHandlerBase, ITodoistActionHandler
     {
+        private readonly TodoistConfigurationOptions _options = optionsAccessor.Value;
         public bool IsApplicable(TodoistRequest request) => request?.Action?.ActionType == TodoistConstants.ActionTypeInitial;
 
         public TodoistResponse Handle(TodoistRequest request)
@@ -36,35 +42,28 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
             var card =
                 new AdaptiveCard();
 
-            card
-                .Body
+            var listContainerItems =
+                new List<CardElement>();
+
+            var nextContainerItems =
+                new List<CardElement>();
+
+            var actionContainerItems =
+                new List<CardElement>();
+
+            var topLevelContainerItems =
+                new List<CardElement>();
+
+            listContainerItems
                 .Add(new TextBlock
                 {
-                    Color = Color.Attention,
+                    Color = Color.Accent,
                     Size = FontSize.ExtraLarge,
                     Text = "Your current QR bundle"
                 });
 
-            card
-                .Body
-                .Add(new RichTextBlock
-                {
-                    Inlines =
-                    [
-                        new TextRun
-                        {
-                            Text = "testing",
-                            Color = Color.Accent,
-                            Size = null,
-                            IsSubtle = null,
-                            Weight = FontWeight.Default
-                        }
-                    ]
-                });
-
-            if (!cachedRequest.Tasks.Any())
-                card
-                    .Body
+            if (!(cachedRequest?.Tasks ?? []).Any())
+                listContainerItems
                     .Add(new TextBlock
                     {
                         Size = FontSize.Medium,
@@ -72,57 +71,60 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                         IsSubtle = true
                     });
             else
-                foreach (var task in cachedRequest.Tasks)
-                    card
-                        .Body
-                        .Add(new TextBlock
+                foreach (var task in cachedRequest?.Tasks ?? [])
+                    listContainerItems
+                        .Add(new RichTextBlock
                         {
-                            Spacing = Spacing.Large,
-                            Size = FontSize.Medium,
-                            Text = $"• {task.Content}"
+                            Separator = true,
+                            Inlines =
+                            [
+                                // Content
+                                new TextRun
+                                {
+                                    Text = task.Content,
+                                    Size = FontSize.Medium,
+                                    Weight = FontWeight.Default
+                                }
+                            ]
                         });
 
             if (alreadyExists)
             {
-                card
-                    .Body
+                nextContainerItems
                     .Add(new TextBlock
                     {
                         Color = Color.Warning,
                         Spacing = Spacing.Large,
                         Size = FontSize.ExtraLarge,
-                        Text = "This item is already in your QR bundle",
+                        Text = "This item is already in your QR bundle.",
                         Separator = true
                     });
             }
             else
             {
-                card
-                    .Body
+                nextContainerItems
                     .Add(new TextBlock
                     {
-                        Color = Color.Attention,
-                        Spacing = Spacing.Large,
+                        Color = Color.Good,
+                        Spacing = Spacing.Default,
                         Size = FontSize.ExtraLarge,
                         Text = "Item to add",
                         Separator = true
                     });
 
-                card
-                    .Body
+                nextContainerItems
                     .Add(new TextBlock
                     {
-                        Spacing = Spacing.Large,
+                        Spacing = Spacing.Default,
                         Size = FontSize.Medium,
                         Text = $"{action?.Params?.Content}"
                     });
             }
 
-            card
-                .Body
+            actionContainerItems
                 .Add(new ActionSet
                 {
-                    Spacing = Spacing.Large,
+                    Spacing = Spacing.Default,
                     Actions =
                     {
                         alreadyExists
@@ -139,6 +141,47 @@ namespace Qrist.Adapters.Todoist.UiExtensions.Handlers
                             Style = ActionStyle.Destructive,
                             Title = "Clear my QR bundle"
                         }
+                    }
+                });
+
+            topLevelContainerItems
+                .Add(
+                    new Container
+                    {
+                        Spacing = Spacing.Large,
+                        Separator = true,
+                        Items = listContainerItems
+                    });
+
+            topLevelContainerItems
+                .Add(
+                    new Container
+                    {
+                        Spacing = Spacing.Large,
+                        Separator = true,
+                        Items = nextContainerItems
+                    });
+
+            topLevelContainerItems
+                .Add(
+                    new Container
+                    {
+                        Spacing = Spacing.Large,
+                        Separator = true,
+                        Items = actionContainerItems
+                    });
+
+            card
+                .Body
+                .Add(new Container
+                {
+                    Spacing = Spacing.Large,
+                    Separator = true,
+                    Items = topLevelContainerItems,
+                    BackgroundImage = new BackgroundImage
+                    {
+                        Url = _options?.BackgroundImageUrl,
+                        FillMode = ImageFillMode.Cover
                     }
                 });
 
